@@ -1,0 +1,44 @@
+cat > /var/www/u3047635/data/www/shynemoscow.ru/success.html << 'EOF'
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Оплата успешна - SHYNEMOSCOW</title>
+    <style>
+        body { 
+            font-family: 'Courier New', monospace;
+            background-color: #f8f8f8;
+            text-align: center;
+            padding: 50px;
+        }
+        .success-icon {
+            color: #4CAF50;
+            font-size: 60px;
+        }
+        .btn {
+            display: inline-block;
+            background: black;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-icon">✓</div>
+    <h1>Оплата прошла успешно!</h1>
+    <p>Ваш заказ будет обработан в ближайшее время.</p>
+    <p>Детали заказа отправлены на ваш email.</p>
+    <a href="/" class="btn">Вернуться в магазин</a>
+    
+    <script>
+        // Очистка корзины после успешной оплаты
+        if (typeof localStorage !== 'undefined') {
+            localStorage.removeItem('cart');
+            localStorage.removeItem('orderData');
+        }
+    </script>
+</body>
+</html>
+EOF

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа - SHYNEMOSCOW</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Helvetica Neue"', 'Arial', 'sans-serif'],
+                        mono: ['"Courier New"', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f8f8; color: #111; font-family: 'IBM Plex Mono', monospace; }
+        h1, h2, h3, h4 { font-family: 'Archivo Black', sans-serif; }
+        .radio-input { appearance: none; width: 16px; height: 16px; border: 2px solid #000; border-radius: 50%; position: relative; margin-right: 8px; cursor: pointer; }
+        .radio-input:checked { border-color: #000; }
+        .radio-input:checked::after { content: ''; position: absolute; top: 2px; left: 2px; width: 8px; height: 8px; background: #000; border-radius: 50%; }
+        .form-input { border-bottom: 2px solid #000; background-color: transparent; padding: 8px 0; transition: all 0.3s; }
+        .form-input:focus { border-bottom-color: #555; }
+        .checkout-card { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .box-hover { transition: transform 0.3s; }
+        .box-hover:hover { transform: translateY(-2px); }
+        .modal-content { max-height: 70vh; overflow-y: auto; padding-right: 1rem; }
+        @media (max-width: 768px) {
+            .checkout-container { display: flex; flex-direction: column; }
+            .checkout-form { order: 1; }
+            .order-summary { order: 2; }
+            .checkout-buttons { order: 3; }
+            .back-btn, .pay-btn { padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem; font-size: 0.75rem; }
+            .back-btn i, .pay-btn i { font-size: 0.75rem; }
+        }
+        .cdek-point-selector { display: none; margin-top: 20px; padding: 15px; background-color: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 8px; }
+        .cdek-point-selector.active { display: block; }
+        .cdek-input-group { margin-bottom: 15px; }
+        .cdek-input-label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
+    </style>
+</head>
+<body class="font-mono">
+    <header class="py-6">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-normal tracking-tighter m-0 p-0 pl-4 font-black tracking-tighter" style="font-family: Impact, sans-serif;">
+                <a href="index.html" class="hover:opacity-80 transition-opacity">SHYNEMOSCOW</a>
+            </h1>
+        </div>
+    </header>
+
+    <main class="py-12 px-4">
+        <div class="container mx-auto max-w-4xl checkout-container">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+                <div class="md:col-span-8 checkout-form">
+                    <div class="checkout-card bg-white p-8 rounded-lg border border-black mb-8">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-6 pb-2 border-b border-black/10">ОФОРМИТЬ ЗАКАЗ</h2>
+                        <div class="mb-10">
+                            <h3 class="text-xl font-bold mb-6">ДОСТАВКА</h3>
+                            <div class="space-y-4 mb-6">
+                                <label class="flex items-center cursor-pointer p-4 border border-black rounded-lg hover:bg-gray-50 transition">
+                                    <input type="radio" name="delivery" value="СДЭК" checked class="radio-input">
+                                    <div class="ml-3">
+                                        <div class="font-bold">СДЭК</div>
+                                        <div class="text-sm opacity-75">Стоимость: 700 ₽</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center cursor-pointer p-4 border border-black rounded-lg hover:bg-gray-50 transition">
+                                    <input type="radio" name="delivery" value="Курьерская доставка СДЭК по Москве" class="radio-input">
+                                    <div class="ml-3">
+                                        <div class="font-bold">Курьерская доставка СДЭК по Москве</div>
+                                        <div class="text-sm opacity-75">Стоимость: 1200 ₽</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center cursor-pointer p-4 border border-black rounded-lg hover:bg-gray-50 transition">
+                                    <input type="radio" name="delivery" value="Почта России" class="radio-input">
+                                    <div class="ml-3">
+                                        <div class="font-bold">Почта России</div>
+                                        <div class="text-sm opacity-75">Стоимость: 300 ₽</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div id="cdek-point-selector" class="cdek-point-selector">
+                                <h4 class="font-bold mb-4">УКАЖИТЕ АДРЕС ПУНКТА ВЫДАЧИ СДЭК</h4>
+                                <div class="cdek-input-group">
+                                    <label class="cdek-input-label">Город</label>
+                                    <input type="text" id="cdek-city" name="cdek_city" class="form-input w-full" placeholder="Введите город">
+                                </div>
+                                <div class="cdek-input-group">
+                                    <label class="cdek-input-label">Адрес пункта выдачи</label>
+                                    <input type="text" id="cdek-point-address" name="cdek_point_address" class="form-input w-full" placeholder="Введите адрес пункта выдачи">
+                                </div>
+                                <div class="text-sm text-gray-600 mt-2">
+                                    <i class="fas fa-info-circle mr-1"></i> Вы можете найти пункты выдачи на 
+                                    <a href="https://cdek.ru/offices" target="_blank" class="underline">официальном сайте СДЭК</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-6">ВАШИ ДАННЫЕ</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div>
+                                    <label class="block text-sm font-bold mb-2">ИМЯ *</label>
+                                    <input type="text" id="name" name="name" required class="form-input w-full">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold mb-2">ТЕЛЕФОН *</label>
+                                    <input type="tel" id="phone" name="phone" required class="form-input w-full" placeholder="+7 (___) ___-__-__">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold mb-2">EMAIL *</label>
+                                    <input type="email" id="email" name="email" required class="form-input w-full">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold mb-2">АДРЕС *</label>
+                                    <input type="text" id="address" name="address" required class="form-input w-full" placeholder="Город, улица, дом, квартира">
+                                </div>
+                            </div>
+                            <div class="mb-8">
+                                <label class="block text-sm font-bold mb-2">КОММЕНТАРИЙ</label>
+                                <textarea id="comment" name="comment" class="form-input w-full h-24"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-4 order-summary">
+                    <div class="checkout-card bg-white p-6 rounded-lg border border-black sticky top-28">
+                        <h3 class="text-xl font-bold mb-6 border-b border-gray-200 pb-4">ВАШ ЗАКАЗ</h3>
+                        <div id="order-items" class="space-y-4 mb-6"></div>
+                        <div class="space-y-3 border-t border-black pt-4 mb-6">
+                            <div class="flex justify-between">
+                                <div>Товары</div>
+                                <div id="subtotal">0 ₽</div>
+                            </div>
+                            <div class="flex justify-between">
+                                <div>Доставка</div>
+                                <div id="delivery-cost">—</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xl font-bold border-t border-black pt-4">
+                            <div>ИТОГО</div>
+                            <div id="total-amount">0 ₽</div>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-gray-200">
+                            <div class="flex items-start mb-4">
+                                <input type="checkbox" id="agree-terms" class="mt-1 mr-3">
+                                <label for="agree-terms" class="text-sm">Я согласен с условиями
+                                    <a href="offer.html" class="underline">Публичной оферты</a> и
+                                    <a href="policy.html" class="underline">Политики конфиденциальности</a>
+                                </label>
+                            </div>
+                            <div class="text-xs opacity-70">
+                                Оформляя заказ, вы подтверждаете, что ознакомлены и согласны с нашими условиями продажи.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-8 checkout-buttons flex justify-between">
+                    <button type="button" class="back-btn border-2 border-black px-6 py-3 rounded-lg font-bold hover:bg-black hover:text-white transition md:text-base text-sm">
+                        <i class="fas fa-arrow-left mr-2"></i> В МАГАЗИН
+                    </button>
+                    <button type="submit" id="pay-btn" class="pay-btn bg-gray-400 text-white px-6 py-3 rounded-lg font-bold transition flex items-center md:text-base text-sm" disabled>
+                        ПЕРЕЙТИ К ОПЛАТЕ <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const totalAmount = document.getElementById("total-amount");
+            const deliveryOptions = document.querySelectorAll('input[name="delivery"]');
+            const cdekPointSelector = document.getElementById("cdek-point-selector");
+            const orderItems = document.getElementById("order-items");
+            const subtotalElement = document.getElementById("subtotal");
+            const deliveryCostElement = document.getElementById("delivery-cost");
+            const agreeTerms = document.getElementById("agree-terms");
+            const payBtn = document.getElementById("pay-btn");
+            const cdekCityInput = document.getElementById("cdek-city");
+            const cdekPointAddressInput = document.getElementById("cdek-point-address");
+
+            const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+            let baseTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+            orderItems.innerHTML = cart.length > 0 ? cart.map(item => `
+                <div class="flex justify-between items-center">
+                    <div class="font-medium">${item.name} (${item.size}, ${item.color})</div>
+                    <div class="font-bold">${item.quantity} × ${item.price.toLocaleString('ru-RU')} ₽</div>
+                </div>
+            `).join('') : '<div class="text-center text-gray-500">Корзина пуста</div>';
+            subtotalElement.textContent = baseTotal.toLocaleString('ru-RU') + ' ₽';
+
+            function toggleCdekPointFields(show) {
+                cdekPointSelector.classList.toggle("active", show);
+            }
+
+            async function calculateShipping() {
+                const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
+                return deliveryType === "СДЭК" ? 700 :
+                       deliveryType === "Курьерская доставка СДЭК по Москве" ? 1200 :
+                       deliveryType === "Почта России" ? 300 : 0;
+            }
+
+            async function updateTotal() {
+                const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
+                toggleCdekPointFields(deliveryType === "СДЭК");
+                const deliveryCost = await calculateShipping();
+                const total = baseTotal + deliveryCost;
+                totalAmount.textContent = total.toLocaleString('ru-RU') + ' ₽';
+                deliveryCostElement.textContent = deliveryCost ? `${deliveryCost.toLocaleString('ru-RU')} ₽` : '—';
+                checkFormValidity();
+            }
+
+            deliveryOptions.forEach(option => option.addEventListener("change", updateTotal));
+            cdekCityInput.addEventListener("input", updateTotal);
+            cdekPointAddressInput.addEventListener("input", updateTotal);
+            updateTotal();
+
+            function checkFormValidity() {
+                const name = document.getElementById("name").value.trim();
+                const phone = document.getElementById("phone").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const address = document.getElementById("address").value.trim();
+                const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
+                const cdekFieldsValid = deliveryType !== "СДЭК" || (cdekCityInput.value.trim() && cdekPointAddressInput.value.trim());
+                const isValid = name && phone && email && address && agreeTerms.checked && cdekFieldsValid;
+
+                payBtn.disabled = !isValid;
+                payBtn.classList.toggle("bg-gray-400", !isValid);
+                payBtn.classList.toggle("bg-black", isValid);
+                payBtn.classList.toggle("hover:opacity-90", isValid);
+            }
+
+            document.querySelectorAll(".form-input[required], #cdek-city, #cdek-point-address").forEach(input => {
+                input.addEventListener("input", checkFormValidity);
+            });
+            agreeTerms.addEventListener("change", checkFormValidity);
+            checkFormValidity();
+
+            payBtn.addEventListener("click", async function (e) {
+                e.preventDefault();
+                if (!agreeTerms.checked) {
+                    alert("Пожалуйста, согласитесь с условиями.");
+                    return;
+                }
+                if (cart.length === 0) {
+                    alert("Корзина пуста!");
+                    return;
+                }
+
+                const formData = new FormData();
+                document.querySelectorAll(".form-input").forEach(input => formData.append(input.name, input.value));
+                const deliveryType = document.querySelector('input[name="delivery"]:checked').value;
+                const deliveryCost = await calculateShipping();
+                const total = baseTotal + deliveryCost;
+
+                const name = formData.get("name").trim();
+                const phone = formData.get("phone").trim();
+                const email = formData.get("email").trim();
+                const address = formData.get("address").trim();
+                if (!name || !phone || !email || !address) {
+                    alert("Пожалуйста, заполните все обязательные поля!");
+                    return;
+                }
+
+                const orderData = {
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    address: address,
+                    comment: formData.get("comment") || "",
+                    delivery: deliveryType,
+                    deliveryCost: deliveryCost,
+                    cdekPoint: deliveryType === "СДЭК" ? { city: cdekCityInput.value.trim(), address: cdekPointAddressInput.value.trim() } : null,
+                    total: total,
+                    items: cart.map(item => ({
+                        name: item.name,
+                        size: item.size,
+                        color: item.color,
+                        price: parseFloat(item.price),
+                        quantity: parseInt(item.quantity)
+                    }))
+                };
+
+                localStorage.setItem("orderData", JSON.stringify(orderData));
+                localStorage.setItem("cart", JSON.stringify(cart));
+                window.location.href = "payment.html";
+            });
+
+            document.querySelector(".back-btn").addEventListener("click", () => window.location.href = "index.html");
+
+            offerLink.addEventListener("click", e => {
+                e.preventDefault();
+                offerPopup.classList.remove("hidden");
+                offerPopup.classList.add("flex");
+                document.body.style.overflow = "hidden";
+            });
+
+            policyLink.addEventListener("click", e => {
+                e.preventDefault();
+                policyPopup.classList.remove("hidden");
+                policyPopup.classList.add("flex");
+                document.body.style.overflow = "hidden";
+            });
+
+            closeOffer.addEventListener("click", () => {
+                offerPopup.classList.add("hidden");
+                offerPopup.classList.remove("flex");
+                document.body.style.overflow = "";
+            });
+
+            closePolicy.addEventListener("click", () => {
+                policyPopup.classList.add("hidden");
+                policyPopup.classList.remove("flex");
+                document.body.style.overflow = "";
+            });
+
+            offerPopup.addEventListener("click", e => {
+                if (e.target === offerPopup) {
+                    offerPopup.classList.add("hidden");
+                    offerPopup.classList.remove("flex");
+                    document.body.style.overflow = "";
+                }
+            });
+
+            policyPopup.addEventListener("click", e => {
+                if (e.target === policyPopup) {
+                    policyPopup.classList.add("hidden");
+                    policyPopup.classList.remove("flex");
+                    document.body.style.overflow = "";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

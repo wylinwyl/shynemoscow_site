@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHYNEMOSCOW - Главная</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Impact&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Сохраняем стили из index.html */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-wrapper {
+            display: inline-flex;
+            animation: marquee 30s linear infinite;
+        }
+        .marquee-content {
+            flex-shrink: 0;
+        }
+        .product-card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 12px rgba(0, 0, 0, 0.15), 0 12px 16px rgba(0, 0, 0, 0.2);
+        }
+        .product-card:hover {
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), 0 10px 15px rgba(0, 0, 0, 0.2), 0 15px 20px rgba(0, 0, 0, 0.25);
+            transform: translateY(-3px);
+        }
+        .cart-item:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        @keyframes slideInFromRight {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(0); }
+        }
+        .cart-content {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .cart-modal.open .cart-content {
+            transform: translateX(0);
+            animation: slideInFromRight 0.3s ease-in-out forwards;
+        }
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Archivo Black', sans-serif;
+        }
+        .footer-copyright {
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            #back-to-top {
+                display: none;
+            }
+            .footer-copyright {
+                font-size: 0.65rem;
+                margin-bottom: 0.5rem;
+            }
+            .footer-links {
+                text-align: center;
+                width: 100%;
+                padding: 0;
+            }
+            .footer-links button {
+                font-size: 0.95rem;
+            }
+            .product-card {
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 12px rgba(0, 0, 0, 0.15), 0 12px 16px rgba(0, 0, 0, 0.2);
+            }
+            .product-card:hover {
+                box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), 0 10px 15px rgba(0, 0, 0, 0.2), 0 15px 20px rgba(0, 0, 0, 0.25);
+                transform: translateY(-3px);
+            }
+        }
+        @media (min-width: 769px) {
+            .footer-links {
+                text-align: center;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-white text-black">
+    <!-- Header -->
+    <header class="sticky top-0 z-20 bg-white border-b-2 border-black">
+        <div class="flex justify-between items-center w-full py-5">
+            <h1 class="text-3xl md:text-4xl font-normal tracking-tighter m-0 p-0 pl-4">
+                <a href="main.html" class="relative">
+                    <span class="block" style="font-family: Impact, sans-serif;">SHYNEMOSCOW</span>
+                    <span class="absolute inset-0 text-black opacity-40" style="font-family: Impact, sans-serif; clip-path: inset(50% 0 0 0);">SHYNEMOSCOW</span>
+                </a>
+            </h1>
+            <div class="flex items-center gap-0 pr-4">
+                <button class="cart-btn px-4 py-2 flex items-center gap-2 hover:bg-gray-100 rounded-md transition-all">
+                    <i class="fas fa-shopping-bag text-lg"></i>
+                    <span class="hidden md:inline font-normal">КОРЗИНА</span>
+                </button>
+                <span class="cart-count text-black text-lg font-normal hidden">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Marquee -->
+    <div class="marquee bg-black text-white overflow-hidden py-2">
+        <div class="marquee-wrapper">
+            <div class="marquee-content whitespace-nowrap text-sm md:text-base font-semibold tracking-wider">
+                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● 
+            </div>
+            <div class="marquee-content whitespace-nowrap text-sm md:text-base font-semibold tracking-wider">
+                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ●
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main class="flex-1 py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Товар 1 -->
+                <a href="index.html" class="product-card block bg-white p-6 rounded-lg">
+                    <img src="hoodie_black.png" alt="HOODIE_01 Черный" class="w-full h-64 object-cover rounded-md mb-4">
+                    <h3 class="text-xl font-bold mb-2">HOODIE_01</h3>
+                    <p class="text-lg font-semibold">4500 РУБ</p>
+                </a>
+                <!-- Товар 2 (пример, замените на реальные данные) -->
+                <a href="index.html" class="product-card block bg-white p-6 rounded-lg">
+                    <img src="hoodie_blackBS.png" alt="HOODIE_02 Черный" class="w-full h-64 object-cover rounded-md mb-4">
+                    <h3 class="text-xl font-bold mb-2">HOODIE_02</h3>
+                    <p class="text-lg font-semibold">4800 РУБ</p>
+                </a>
+                <!-- Товар 3 (пример, замените на реальные данные) -->
+                <a href="index.html" class="product-card block bg-white p-6 rounded-lg">
+                    <img src="hoodie_black.png" alt="HOODIE_03 Черный" class="w-full h-64 object-cover rounded-md mb-4">
+                    <h3 class="text-xl font-bold mb-2">HOODIE_03</h3>
+                    <p class="text-lg font-semibold">5000 РУБ</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Shopping cart modal -->
+    <div id="cart-modal" class="cart-modal fixed inset-0 z-50 bg-black/50 hidden">
+        <div class="cart-content absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl overflow-y-auto">
+            <div class="p-6 sticky top-0 bg-white border-b border-gray-200 z-10">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold">ВАША КОРЗИНА</h2>
+                    <span class="close-cart text-3xl cursor-pointer hover:text-gray-500 transition-colors">×</span>
+                </div>
+            </div>
+            <div id="cart-items" class="cart-items p-6 space-y-4">
+                <div class="empty-cart text-center py-12">
+                    <i class="fas fa-shopping-bag text-4xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500">Ваша корзина пуста</p>
+                </div>
+            </div>
+            <div class="cart-footer p-6 sticky bottom-0 bg-white border-t border-gray-200">
+                <div class="flex justify-between mb-4">
+                    <p class="font-semibold">Итого</p>
+                    <p id="cart-total" class="font-bold">0 РУБ</p>
+                </div>
+                <button class="checkout-btn w-full bg-black text-white py-3 px-6 hover:bg-gray-800 transition-colors rounded-md">
+                    ОФОРМИТЬ ЗАКАЗ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contacts modal -->
+    <div id="contacts-modal" class="modal hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
+        <div class="bg-white p-6 max-w-md rounded-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">КОНТАКТЫ</h3>
+                <span class="close-contacts text-2xl cursor-pointer">×</span>
+            </div>
+            <div class="prose">
+                <p>По вопросам пишите на почту:</p>
+                <p class="text-lg font-medium"><a href="/cdn-cgi/l/email-protection#80f3e8f9eee5edeff3e3eff7c0e9eee2eff8aef2f5"><span class="__cf_email__" data-cfemail="7f0c1706111a12100c1c10083f16111d1007510d0a">[email&#160;protected]</span></a></p>
+                <p class="mt-4">
+                    <a href="https://t.me/shynemoscow" target="_blank" class="text-black hover:text-gray-600 transition-colors">
+                        <i class="fab fa-telegram mr-1"></i> Telegram
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky "back to top" button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-black text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-gray-800 transition-all hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="py-6 relative">
+        <div class="container mx-auto px-4 flex flex-col items-center">
+            <p class="text-sm md:text-sm footer-copyright">© 2025 SHYNEMOSCOW.</p>
+            <div class="flex items-center gap-4 footer-links">
+                <button id="contacts-btn" class="text-black hover:text-gray-600 transition-colors underline text-xs">КОНТАКТЫ</button>
+                <a href="offer.html" class="text-black hover:text-gray-600 transition-colors underline text-xs">ПУБЛИЧНАЯ ОФЕРТА</a>
+                <a href="policy.html" class="text-black hover:text-gray-600 transition-colors underline text-xs">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cartModal = document.getElementById("cart-modal");
+            const cartBtn = document.querySelector(".cart-btn");
+            const closeCart = document.querySelector(".close-cart");
+            const cartItems = document.getElementById("cart-items");
+            const cartTotal = document.getElementById("cart-total");
+            const checkoutBtn = document.querySelector(".checkout-btn");
+            const cartCount = document.querySelector(".cart-count");
+            const backToTopBtn = document.getElementById("back-to-top");
+            const contactsBtn = document.getElementById("contacts-btn");
+            const contactsModal = document.getElementById("contacts-modal");
+            const closeContacts = document.querySelector(".close-contacts");
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            updateCartCount();
+
+            // Открытие/закрытие корзины
+            cartBtn.addEventListener("click", function () {
+                cartModal.classList.remove("hidden");
+                cartModal.classList.add("open");
+                document.body.style.overflow = "hidden";
+                updateCart();
+            });
+            closeCart.addEventListener("click", function () {
+                cartModal.classList.remove("open");
+                setTimeout(() => {
+                    cartModal.classList.add("hidden");
+                    document.body.style.overflow = "";
+                }, 300);
+            });
+            window.addEventListener("click", function (e) {
+                if (e.target === cartModal) {
+                    cartModal.classList.remove("open");
+                    setTimeout(() => {
+                        cartModal.classList.add("hidden");
+                        document.body.style.overflow = "";
+                    }, 300);
+                }
+            });
+
+            // Открытие/закрытие модального окна контактов
+            contactsBtn.addEventListener("click", () => {
+                contactsModal.classList.remove("hidden");
+                contactsModal.classList.add("flex");
+                document.body.style.overflow = "hidden";
+            });
+            closeContacts.addEventListener("click", () => {
+                contactsModal.classList.add("hidden");
+                contactsModal.classList.remove("flex");
+                document.body.style.overflow = "";
+            });
+            contactsModal.addEventListener("click", (e) => {
+                if (e.target === contactsModal) {
+                    contactsModal.classList.add("hidden");
+                    contactsModal.classList.remove("flex");
+                    document.body.style.overflow = "";
+                }
+            });
+
+            // Кнопка "наверх"
+            window.addEventListener("scroll", () => {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove("hidden");
+                } else {
+                    backToTopBtn.classList.add("hidden");
+                }
+            });
+            backToTopBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+
+            // Переход к оформлению
+            checkoutBtn.addEventListener("click", function () {
+                if (cart.length === 0) {
+                    alert("Корзина пуста");
+                    return;
+                }
+                const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                window.location.href = `checkout.html?total=${total}`;
+            });
+
+            // Обновление корзины
+            function updateCart() {
+                cartItems.innerHTML = "";
+                let total = 0;
+
+                if (cart.length === 0) {
+                    cartItems.innerHTML = `
+                        <div class="empty-cart text-center py-12">
+                            <i class="fas fa-shopping-bag text-4xl text-gray-300 mb-4"></i>
+                            <p class="text-gray-500">Ваша корзина пуста</p>
+                        </div>
+                    `;
+                } else {
+                    cart.forEach((item, index) => {
+                        const itemTotal = item.price * item.quantity;
+                        const cartItem = document.createElement("div");
+                        cartItem.classList.add("cart-item", "flex", "py-4", "border-b", "border-gray-100");
+                        cartItem.innerHTML = `
+                            <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded">
+                            <div class="flex-1 ml-4">
+                                <div class="flex justify-between">
+                                    <h4 class="font-medium">${item.name}</h4>
+                                    <span class="item-total font-medium">${itemTotal.toLocaleString('ru-RU')} РУБ</span>
+                                </div>
+                                <div class="text-sm text-gray-500 mt-1">
+                                    <p>Размер: ${item.size} | Цвет: ${item.color}</p>
+                                </div>
+                                <div class="quantity-controls flex items-center mt-3">
+                                    <button class="decrease-qty px-3 py-1 border rounded" data-index="${index}">−</button>
+                                    <span class="quantity mx-3 w-8 text-center">${item.quantity}</span>
+                                    <button class="increase-qty px-3 py-1 border rounded" data-index="${index}">+</button>
+                                </div>
+                            </div>
+                            <button class="remove-item ml-4 text-gray-400 hover:text-black transition-colors" data-index="${index}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        `;
+                        cartItems.appendChild(cartItem);
+                        total += itemTotal;
+                    });
+                }
+
+                cartTotal.textContent = `${total.toLocaleString('ru-RU')} РУБ`;
+
+                document.querySelectorAll(".decrease-qty").forEach(button => {
+                    button.addEventListener("click", function() {
+                        const index = parseInt(this.getAttribute("data-index"));
+                        if (cart[index].quantity > 1) {
+                            cart[index].quantity--;
+                        } else {
+                            cart.splice(index, 1);
+                        }
+                        saveAndUpdateCart();
+                    });
+                });
+
+                document.querySelectorAll(".increase-qty").forEach(button => {
+                    button.addEventListener("click", function() {
+                        const index = parseInt(this.getAttribute("data-index"));
+                        cart[index].quantity++;
+                        saveAndUpdateCart();
+                    });
+                });
+
+                document.querySelectorAll(".remove-item").forEach(button => {
+                    button.addEventListener("click", function() {
+                        const index = parseInt(this.getAttribute("data-index"));
+                        cart.splice(index, 1);
+                        saveAndUpdateCart();
+                    });
+                });
+            }
+
+            function saveAndUpdateCart() {
+                localStorage.setItem("cart", JSON.stringify(cart));
+                updateCart();
+                updateCartCount();
+            }
+
+            function updateCartCount() {
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                if (totalItems > 0) {
+                    cartCount.textContent = totalItems;
+                    cartCount.classList.remove("hidden");
+                } else {
+                    cartCount.classList.add("hidden");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

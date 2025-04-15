@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата заказа - SHYNEMOSCOW</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Helvetica Neue"', 'Arial', 'sans-serif'],
+                        mono: ['"Courier New"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
+    <style>
+        body { background-color: #f8f8f8; color: #111; font-family: 'Courier New', monospace; }
+        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #000; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #payment-form { min-height: 400px; display: flex; flex-direction: column; justify-content: center; }
+        .order-item:hover { background-color: rgba(0,0,0,0.02); }
+        @media (max-width: 768px) { .mobile-hidden { display: none; } .mobile-only { display: block; } }
+        @media (min-width: 769px) { .mobile-only { display: none; } }
+    </style>
+</head>
+<body>
+    <header class="py-6">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-normal tracking-tighter pl-4" style="font-family: Impact, sans-serif;">
+                SHYNEMOSCOW
+            </h1>
+        </div>
+    </header>
+
+    <main class="py-8 md:py-12 px-4">
+        <div class="container mx-auto max-w-4xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                <div class="md:col-span-2">
+                    <div class="bg-white p-6 md:p-8 rounded-lg border border-black mb-6">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-6 pb-2 border-b border-black/10">ОПЛАТА ЗАКАЗА</h2>
+                        <div id="payment-container">
+                            <div id="payment-form"></div>
+                            <div id="payment-loader" class="loader hidden"></div>
+                        </div>
+                    </div>
+                    <div class="text-center md:text-left mobile-hidden">
+                        <a href="checkout.html" class="inline-flex items-center border-2 border-black px-6 py-3 rounded-lg font-bold hover:bg-black hover:text-white transition md:text-base text-sm">
+                            <i class="fas fa-arrow-left mr-2"></i> ВЕРНУТЬСЯ К ОФОРМЛЕНИЮ ЗАКАЗА
+                        </a>
+                    </div>
+                </div>
+                <div class="md:col-span-1">
+                    <div class="bg-white p-6 md:p-8 rounded-lg border border-black sticky top-28">
+                        <h3 class="text-xl font-bold mb-6 pb-2 border-b border-black/10">ВАШ ЗАКАЗ</h3>
+                        <div id="order-items" class="space-y-4 mb-6 max-h-64 overflow-y-auto"></div>
+                        <div class="space-y-3 border-t border-black/10 pt-4 mb-6">
+                            <div class="flex justify-between">
+                                <div>Товары</div>
+                                <div id="subtotal">0 ₽</div>
+                            </div>
+                            <div class="flex justify-between">
+                                <div>Доставка</div>
+                                <div id="delivery-cost">—</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xl font-bold border-t border-black/10 pt-4">
+                            <div>ИТОГО</div>
+                            <div id="total-amount">0 ₽</div>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-black/10">
+                            <h4 class="font-bold mb-3">ПОКУПАТЕЛЬ</h4>
+                            <div id="customer-info" class="text-sm space-y-1"></div>
+                        </div>
+                        <div class="mt-6 text-center mobile-only">
+                            <a href="checkout.html" class="inline-flex items-center border-2 border-black px-6 py-3 rounded-lg font-bold hover:bg-black hover:text-white transition md:text-base text-sm">
+                                <i class="fas fa-arrow-left mr-2"></i> ВЕРНУТЬСЯ К ОФОРМЛЕНИЮ ЗАКАЗА
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="success-popup" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-white p-8 rounded-lg text-center">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">ОПЛАТА УСПЕШНА!</h3>
+            <p class="mb-6">Ваш заказ №<span id="order-number">123456</span> успешно оплачен.</p>
+            <p class="text-sm text-gray-600 mb-8">Подробности заказа были отправлены на ваш email.</p>
+            <a href="index.html" class="inline-flex items-center bg-black text-white px-6 py-3 rounded-lg font-bold hover:opacity-90 transition md:text-base text-sm">
+                <i class="fas fa-arrow-left mr-2"></i> ВЕРНУТЬСЯ В МАГАЗИН
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const orderItems = document.getElementById("order-items");
+            const subtotalElement = document.getElementById("subtotal");
+            const deliveryCostElement = document.getElementById("delivery-cost");
+            const totalAmount = document.getElementById("total-amount");
+            const customerInfo = document.getElementById("customer-info");
+            const paymentForm = document.getElementById("payment-form");
+            const paymentLoader = document.getElementById("payment-loader");
+            const successPopup = document.getElementById("success-popup");
+
+            // Получаем данные из localStorage
+            const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+            const orderData = JSON.parse(localStorage.getItem("orderData") || "{}");
+
+            // Отображаем информацию о заказе
+            function displayOrderInfo() {
+                orderItems.innerHTML = cart.length > 0 ? 
+                    cart.map(item => `
+                        <div class="flex justify-between items-center order-item">
+                            <div class="font-medium">${item.name} (${item.size}, ${item.color})</div>
+                            <div class="font-bold">${item.quantity} × ${item.price.toLocaleString('ru-RU')} ₽</div>
+                        </div>
+                    `).join('') : 
+                    '<div class="text-center text-gray-500">Корзина пуста</div>';
+
+                const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                subtotalElement.textContent = subtotal.toLocaleString('ru-RU') + ' ₽';
+                deliveryCostElement.textContent = orderData.deliveryCost ? 
+                    orderData.deliveryCost.toLocaleString('ru-RU') + ' ₽' : '—';
+                totalAmount.textContent = orderData.total ? 
+                    orderData.total.toLocaleString('ru-RU') + ' ₽' : 
+                    subtotal.toLocaleString('ru-RU') + ' ₽';
+
+                customerInfo.innerHTML = `
+                    <div>${orderData.name || 'Не указано'}</div>
+                    <div>${orderData.phone || 'Не указано'}</div>
+                    <div>${orderData.email || 'Не указано'}</div>
+                    <div>${orderData.address || 'Не указано'}</div>
+                `;
+            }
+
+            async function initYooKassa() {
+                if (!orderData.email || cart.length === 0) {
+                    paymentForm.innerHTML = '<p class="text-center text-red-500">Ошибка: email или корзина пуста</p>';
+                    return;
+                }
+
+                const totalAmount = orderData.total || 
+                    cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+                paymentLoader.classList.remove("hidden");
+                paymentForm.innerHTML = '';
+
+                try {
+                    // Формируем данные для запроса
+                    const requestData = {
+                        amount: {
+                            value: totalAmount.toFixed(2),
+                            currency: "RUB"
+                        },
+                        email: orderData.email,
+                        items: cart.map(item => ({
+                            description: `${item.name} (${item.size}, ${item.color})`.substring(0, 128),
+                            quantity: parseFloat(item.quantity) || 1,
+                            amount: {
+                                value: parseFloat(item.price).toFixed(2),
+                                currency: "RUB"
+                            },
+                            vat_code: 1,
+                            payment_mode: "full_payment",
+                            payment_subject: "commodity"
+                        })),
+                        description: "Оплата заказа на SHYNEMOSCOW",
+                        metadata: {
+                            orderData: JSON.stringify(orderData) // Передаем orderData в metadata
+                        }
+                    };
+
+                    // Добавляем доставку как отдельный товар
+                    if (orderData.deliveryCost && orderData.deliveryCost > 0) {
+                        requestData.items.push({
+                            description: `Доставка (${orderData.delivery})`,
+                            quantity: 1,
+                            amount: {
+                                value: orderData.deliveryCost.toFixed(2),
+                                currency: "RUB"
+                            },
+                            vat_code: 1,
+                            payment_mode: "full_payment",
+                            payment_subject: "service"
+                        });
+                    }
+
+                    const response = await fetch("generate-payment-token.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(requestData)
+                    });
+
+                    // Проверяем статус ответа
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error ${response.status}: ${errorText.substring(0, 100)}`);
+                    }
+
+                    // Парсим JSON только если Content-Type правильный
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error('Invalid response format from server');
+                    }
+
+                    const data = await response.json();
+
+                    if (data.status !== 'success') {
+                        throw new Error(data.error || 'Payment creation failed');
+                    }
+
+                    // Редирект на страницу оплаты
+                    window.location.href = data.confirmation_url;
+
+                } catch (error) {
+                    console.error('Payment error:', error);
+                    paymentLoader.classList.add("hidden");
+                    paymentForm.innerHTML = `
+                        <div class="text-center p-4 border border-red-200 bg-red-50 rounded-lg">
+                            <p class="text-red-600 font-bold mb-2">Ошибка при создании платежа</p>
+                            <p class="text-sm text-red-500 mb-4">${error.message}</p>
+                            <button onclick="initYooKassa()" 
+                                    class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">
+                                Попробовать снова
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+            displayOrderInfo();
+            initYooKassa();
+        });
+    </script>
+</body>
+</html>
