@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHYNEMOSCOW</title>
+    <title>SHYNEMOSCOW.HOODIE_01 </title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Impact&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Оставляем все стили без изменений */
         @keyframes marquee {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); } /* Изменено с -100% на -50%, так как теперь два текста */
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
         .marquee {
             overflow: hidden;
             white-space: nowrap;
         }
         .marquee-wrapper {
-            display: inline-flex; /* Используем flex для размещения двух текстов в ряд */
-            animation: marquee 30s linear infinite; /* Уменьшил время до 20s для более быстрой демонстрации, можно настроить */
+            display: inline-flex;
+            animation: marquee 30s linear infinite;
         }
         .marquee-content {
-            flex-shrink: 0; /* Предотвращает сжатие текста */
+            flex-shrink: 0;
         }
         
         .image-gallery {
@@ -93,17 +92,17 @@
             border-width: 6px;
             border-color: #000;
             box-shadow: 
-                0 8px 12px rgba(0, 0, 0, 0.1),    /* Уменьшено с 10px 15px */
-                0 15px 20px rgba(0, 0, 0, 0.15),  /* Уменьшено с 20px 25px */
-                0 20px 30px rgba(0, 0, 0, 0.25);  /* Уменьшено с 30px 40px */
+                0 8px 12px rgba(0, 0, 0, 0.1),
+                0 15px 20px rgba(0, 0, 0, 0.15),
+                0 20px 30px rgba(0, 0, 0, 0.25);
             z-index: 10;
             transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
         .product-details:hover {
             box-shadow: 
-                0 12px 16px rgba(0, 0, 0, 0.15),  /* Уменьшено с 15px 20px */
-                0 20px 25px rgba(0, 0, 0, 0.2),   /* Уменьшено с 25px 35px */
-                0 30px 40px rgba(0, 0, 0, 0.3);   /* Уменьшено с 40px 50px */
+                0 12px 16px rgba(0, 0, 0, 0.15),
+                0 20px 25px rgba(0, 0, 0, 0.2),
+                0 30px 40px rgba(0, 0, 0, 0.3);
             transform: translateY(-5px);
         }
         @keyframes slideInFromRight {
@@ -119,7 +118,7 @@
             animation: slideInFromRight 0.3s ease-in-out forwards;
         }
         body {
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'Manrope', sans-serif; /* Замена IBM Plex Mono на Manrope */
         }
         h1, h2, h3, h4 {
             font-family: 'Archivo Black', sans-serif;
@@ -127,7 +126,68 @@
         .footer-copyright {
             text-align: center;
         }
+        /* Adaptive styles for different resolutions */
+        main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            width: 100%;
+        }
+        .container {
+            width: 100%;
+            max-width: 64rem; /* max-w-6xl */
+            margin: 0 auto;
+            padding-top: 1rem; /* Prevent overlap with marquee */
+            padding-bottom: 1rem;
+        }
+        .product-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            width: 100%;
+            max-width: 60rem;
+            margin: 0 auto;
+        }
+        @media (min-width: 1024px) {
+            .product-container {
+                flex-direction: row;
+                justify-content: center;
+                gap: 2rem;
+            }
+            .image-gallery,
+            .product-details {
+                max-width: 28rem;
+                width: 100%;
+            }
+        }
+        @media (max-width: 1023px) {
+            .product-container {
+                max-width: 90%;
+                gap: 1.5rem;
+            }
+            .image-gallery,
+            .product-details {
+                max-width: 100%;
+            }
+            .container {
+                padding-top: 2rem;
+            }
+        }
         @media (max-width: 768px) {
+            .product-container {
+                max-width: 95%;
+                gap: 1rem;
+            }
+            .image-gallery,
+            .product-details {
+                max-width: 100%;
+            }
+            .container {
+                padding-top: 2.5rem;
+            }
             #back-to-top {
                 display: none;
             }
@@ -145,16 +205,25 @@
             }
             .product-details {
                 box-shadow: 
-                    0 4px 8px rgba(0, 0, 0, 0.1),    /* Уменьшено с 8px 12px */
-                    0 8px 12px rgba(0, 0, 0, 0.15),  /* Уменьшено с 15px 20px */
-                    0 12px 16px rgba(0, 0, 0, 0.2);  /* Уменьшено с 20px 30px */
+                    0 4px 8px rgba(0, 0, 0, 0.1),
+                    0 8px 12px rgba(0, 0, 0, 0.15),
+                    0 12px 16px rgba(0, 0, 0, 0.2);
             }
             .product-details:hover {
                 box-shadow: 
-                    0 6px 10px rgba(0, 0, 0, 0.15),  /* Уменьшено с 12px 16px */
-                    0 10px 15px rgba(0, 0, 0, 0.2),  /* Уменьшено с 20px 25px */
-                    0 15px 20px rgba(0, 0, 0, 0.25); /* Уменьшено с 30px 40px */
-                transform: translateY(-3px);      /* Уменьшено поднятие с -5px до -3px */
+                    0 6px 10px rgba(0, 0, 0, 0.15),
+                    0 10px 15px rgba(0, 0, 0, 0.2),
+                    0 15px 20px rgba(0, 0, 0, 0.25);
+                transform: translateY(-3px);
+            }
+        }
+        @media (min-width: 1921px) {
+            .product-container {
+                max-width: 70rem;
+            }
+            .image-gallery,
+            .product-details {
+                max-width: 32rem;
             }
         }
         @media (min-width: 769px) {
@@ -169,13 +238,10 @@
     <!-- Header -->
     <header class="sticky top-0 z-20 bg-white border-b-2 border-black">
         <div class="flex justify-between items-center w-full py-5">
-            <h1 class="text-3xl md:text-4xl font-normal tracking-tighter m-0 p-0 pl-4">
-                <span class="relative">
-                    <span class="block" style="font-family: Impact, sans-serif;">SHYNEMOSCOW</span>
-                    <span class="absolute inset-0 text-black opacity-40" style="font-family: Impact, sans-serif; clip-path: inset(50% 0 0 0);">SHYNEMOSCOW</span>
-                </span>
+            <h1 class="text-3xl md:text-4xl font-normal tracking-tighter m-0 p-0 pl-20">
+                <span class="block" style="font-family: Impact, sans-serif;">shynemoscow</span>
             </h1>
-            <div class="flex items-center gap-0 pr-4">
+            <div class="flex items-center gap-0 pr-20">
                 <button class="cart-btn px-4 py-2 flex items-center gap-2 hover:bg-gray-100 rounded-md transition-all">
                     <i class="fas fa-shopping-bag text-lg"></i>
                     <span class="hidden md:inline font-normal">КОРЗИНА</span>
@@ -189,7 +255,7 @@
     <div class="marquee bg-black text-white overflow-hidden py-2">
         <div class="marquee-wrapper">
             <div class="marquee-content whitespace-nowrap text-sm md:text-base font-semibold tracking-wider">
-                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ●&nbsp;
+                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● 
             </div>
             <div class="marquee-content whitespace-nowrap text-sm md:text-base font-semibold tracking-wider">
                 ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ●
@@ -197,9 +263,9 @@
         </div>
     </div>
 
-    <main class="flex-1 py-8">
-        <div class="container mx-auto px-4">
-            <div class="product-container flex flex-col lg:flex-row items-center lg:items-start gap-8 max-w-6xl mx-auto">
+    <main class="flex-1">
+        <div class="container">
+            <div class="product-container">
                 <!-- Image gallery -->
                 <div class="image-gallery relative w-full max-w-lg rounded-lg overflow-hidden">
                     <div class="slides w-full">
@@ -331,7 +397,7 @@
             </div>
             <div class="prose">
                 <p>По вопросам пишите на почту:</p>
-                <p class="text-lg font-medium"><a href="mailto:shynemoscow@inbox.ru">shynemoscow@inbox.ru</a></p>
+                <p class="text-lg font-medium"><a href="/cdn-cgi/l/email-protection#d9aab1a0b7bcb4b6aabab6ae99b0b7bbb6a1f7abac"><span class="__cf_email__" data-cfemail="c1f2e9f8efe4eceef2e2eef6c1e8efe3eef9aff3f4">[email&#160;protected]</span></a></p>
                 <p class="mt-4">
                     <a href="https://t.me/shynemoscow" target="_blank" class="text-black hover:text-gray-600 transition-colors">
                         <i class="fab fa-telegram mr-1"></i> Telegram
@@ -358,6 +424,7 @@
         </div>
     </footer>
 
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const images = ["hoodie_black.png", "hoodie_blackBS.png"];
@@ -391,9 +458,27 @@
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             const slideWidth = slides.offsetWidth;
 
+            // Динамическая высота main
+            function updateMainHeight() {
+                const header = document.querySelector("header");
+                const marquee = document.querySelector(".marquee");
+                const footer = document.querySelector("footer");
+                const main = document.querySelector("main");
+
+                const headerHeight = header.offsetHeight;
+                const marqueeHeight = marquee.offsetHeight;
+                const footerHeight = footer.offsetHeight;
+
+                const totalHeight = headerHeight + marqueeHeight + footerHeight;
+                main.style.minHeight = `calc(100vh - ${totalHeight}px)`;
+            }
+
+            updateMainHeight();
+            window.addEventListener("resize", updateMainHeight);
+
             updateCartCount();
 
-            // Открытие/закрытие модальных окон (только для Contacts и Size Guide)
+            // Открытие/закрытие модальных окон
             contactsBtn.addEventListener("click", () => {
                 contactsModal.classList.remove("hidden");
                 contactsModal.classList.add("flex");
@@ -442,7 +527,7 @@
                 window.scrollTo({ top: 0, behavior: "smooth" });
             });
 
-            // Переключение слайдов кнопками
+            // Переключение слайдов
             prevBtn.addEventListener("click", function () {
                 if (currentIndex > 0) {
                     currentIndex--;
@@ -458,7 +543,6 @@
                 }
             });
 
-            // Переключение по миниатюрам
             thumbnails.forEach(thumbnail => {
                 thumbnail.addEventListener("click", function () {
                     const index = parseInt(this.getAttribute("data-index"));
@@ -468,7 +552,6 @@
                 });
             });
 
-            // Открытие увеличенного изображения
             slideImages.forEach(img => {
                 img.addEventListener("click", function () {
                     try {
@@ -477,12 +560,11 @@
                         imagePopup.classList.add("flex");
                         document.body.style.overflow = "hidden";
                     } catch (error) {
-                        console.error("Ошибка при открытии увеличенного изображения:", error);
+                        console.error("Ошибка при открытии изображения:", error);
                     }
                 });
             });
 
-            // Закрытие увеличенного изображения
             closePopup.addEventListener("click", closeImagePopup);
             imagePopup.addEventListener("click", function (e) {
                 if (!popupImage.contains(e.target)) {
@@ -497,11 +579,11 @@
                     popupImage.src = "";
                     document.body.style.overflow = "";
                 } catch (error) {
-                    console.error("Ошибка при закрытии увеличенного изображения:", error);
+                    console.error("Ошибка при закрытии изображения:", error);
                 }
             }
 
-            // Открытие/закрытие корзины
+            // Корзина
             cartBtn.addEventListener("click", function () {
                 cartModal.classList.remove("hidden");
                 cartModal.classList.add("open");
@@ -525,7 +607,6 @@
                 }
             });
 
-            // Выбор размера
             sizeButtons.forEach(button => {
                 button.addEventListener("click", function () {
                     sizeButtons.forEach(btn => btn.classList.remove("active"));
@@ -534,7 +615,6 @@
                 });
             });
 
-            // Добавление в корзину
             addToCartBtn.addEventListener("click", function () {
                 const price = 4500;
                 const firstImage = images[0];
@@ -569,7 +649,6 @@
                 updateCartCount();
             });
 
-            // Переход к оформлению
             checkoutBtn.addEventListener("click", function () {
                 if (cart.length === 0) {
                     alert("Корзина пуста");
@@ -579,7 +658,7 @@
                 window.location.href = `checkout.html?total=${total}`;
             });
 
-            // Обработка свайпа по изображениям
+            // Свайп
             let touchStartX = 0;
             let touchEndX = 0;
 
@@ -609,7 +688,6 @@
                 touchEndX = 0;
             });
 
-            // Функции обновления
             function updateCart() {
                 cartItems.innerHTML = "";
                 let total = 0;
@@ -711,9 +789,10 @@
                     }
                 });
             }
-           // Проверка успешной оплаты
+
+            // Проверка оплаты
             const urlParams = new URLSearchParams(window.location.search);
-            const idempotenceKey = urlParams.get('payment_id'); // Теперь это idempotenceKey
+            const idempotenceKey = urlParams.get('payment_id');
             const successPopup = document.getElementById("success-popup");
             const errorPopup = document.getElementById("error-popup");
             const closeSuccessPopupBtn = document.getElementById("close-success-popup");
@@ -748,7 +827,6 @@
             }
 
             if (idempotenceKey) {
-                // Проверяем статус платежа
                 checkPaymentStatus(idempotenceKey).then(result => {
                     if (result && result.status === 'succeeded') {
                         console.log("Платеж успешен, очищаем корзину");
@@ -756,7 +834,6 @@
                         successPopup.classList.add("flex");
                         document.getElementById("order-number").textContent = result.paymentId;
 
-                        // Очистка корзины
                         cart = [];
                         localStorage.removeItem('cart');
                         localStorage.removeItem('orderData');
@@ -764,7 +841,6 @@
                         updateCart();
                         updateCartCount();
                     } else if (result && (result.status === 'canceled' || result.status === 'failed')) {
-                        // Платеж не успешен — показываем ошибку
                         errorPopup.classList.remove("hidden");
                         errorPopup.classList.add("flex");
                     } else {
@@ -773,24 +849,20 @@
                         errorPopup.classList.add("flex");
                     }
 
-                    // Очистка URL от параметров
                     window.history.replaceState({}, document.title, window.location.pathname);
                 });
             }
 
-            // Закрытие попапа успеха
             closeSuccessPopupBtn.addEventListener("click", () => {
                 successPopup.classList.add("hidden");
                 successPopup.classList.remove("flex");
             });
 
-            // Закрытие попапа ошибки
             closeErrorPopupBtn.addEventListener("click", () => {
                 errorPopup.classList.add("hidden");
                 errorPopup.classList.remove("flex");
             });
 
-            // Закрытие попапа успеха при клике вне контента
             successPopup.addEventListener("click", (e) => {
                 if (e.target === successPopup) {
                     successPopup.classList.add("hidden");
@@ -798,7 +870,6 @@
                 }
             });
 
-            // Закрытие попапа ошибки при клике вне контента
             errorPopup.addEventListener("click", (e) => {
                 if (e.target === errorPopup) {
                     errorPopup.classList.add("hidden");
@@ -807,8 +878,7 @@
             });
         });
     </script>
-    <!-- Оставляем скрипты Cloudflare без изменений -->
-    
+
     <!-- Error popup -->
     <div id="error-popup" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="relative w-full max-w-md bg-white p-8 rounded-lg text-center">
@@ -824,6 +894,7 @@
             </button>
         </div>
     </div>
+
     <!-- Success popup -->
     <div id="success-popup" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="relative w-full max-w-md bg-white p-8 rounded-lg text-center">
@@ -840,5 +911,7 @@
             </button>
         </div>
     </div>
+
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'932ed8e11c69bcd8',t:'MTc0NTA5MTM0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
