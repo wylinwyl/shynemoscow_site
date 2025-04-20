@@ -76,19 +76,19 @@
         .modal-overlay {
             background-color: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
-            z-index: 10;
+            z-index: 10; /* Оверлей ниже корзины */
         }
         .cart-modal {
-            transform: translateX(100%);
+            transform: translateX(100%); /* Начинается за правой границей */
             transition: transform 0.3s ease-in-out;
-            box-shadow: -10px 0 15px -3px rgba(0, 0, 0, 0.1), -4px 0 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: -10px 0 15px -3px rgba(0, 0, 0, 0.1), -4px 0 6px -2px rgba(0, 0, 0, 0.05); /* Тень слева */
             z-index: 20;
         }
         .cart-modal.open {
-            transform: translateX(0);
+            transform: translateX(0); /* Сдвигается в видимую область */
         }
         .cart-modal.closing {
-            transform: translateX(100%);
+            transform: translateX(100%); /* Уходит вправо при закрытии */
         }
         
         .dot {
@@ -108,7 +108,7 @@
         h1, h2, h3, h4 {
             font-family: 'Archivo Black', sans-serif;
             letter-spacing: -0.025em;
-            color: #3d0a05;
+            color: #3d0a05; /* Updated color for headers */
         }
         
         .transition-smooth {
@@ -143,7 +143,7 @@
             display: none !important;
         }
         body.modal-open {
-            overflow-x: hidden;
+            overflow-x: hidden; /* Предотвращаем горизонтальную прокрутку */
         }
         
         @keyframes cart-added {
@@ -173,17 +173,17 @@
                 border: none;
             }
             .header-logo {
-                padding-left: 0.5rem !important;
+                padding-left: 0.5rem !important; /* Минимальный отступ слева */
             }
             .header-cart {
-                padding-right: 0.5rem !important;
+                padding-right: 0.5rem !important; /* Минимальный отступ справа */
             }
             header .flex {
                 padding-left: 0.5rem;
                 padding-right: 0.5rem;
             }
             #popup-image {
-                cursor: default;
+                cursor: default; /* Remove zoom cursor on mobile */
             }
         }
 
@@ -209,25 +209,25 @@
         }
 
         .color-square {
-            width: 1.25rem; /* Еще уменьшаем размер до ~20px */
+            width: 1.25rem;
             height: 1.25rem;
             border-radius: 0.125rem;
             transition: all 0.2s ease;
-            outline: 1px solid rgba(0, 0, 0, 0.3); /* Постоянная черная полупрозрачная рамка */
-            outline-offset: 2px; /* Зазор между квадратиком и рамкой */
+            outline: 1px solid rgba(0, 0, 0, 0.3);
+            outline-offset: 2px;
         }
 
         .color-switch:hover .color-square {
-            transform: scale(1.1); /* Увеличение при наведении */
+            transform: scale(1.1);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .color-switch.active .color-square {
-            width: 1.5rem; /* Активный квадрат чуть больше */
+            width: 1.5rem;
             height: 1.5rem;
-            outline: 1px solid #000000; /* Черная рамка для активного цвета */
+            outline: 1px solid #000000;
             outline-offset: 2px;
-            transform: scale(1); /* Без дополнительного увеличения */
+            transform: scale(1);
         }
     </style>
 </head>
@@ -266,8 +266,8 @@
                 <!-- Image gallery -->
                 <div class="image-gallery relative w-full max-w-lg rounded-lg overflow-hidden" role="region" aria-label="Галерея изображений товара">
                     <div class="slides w-full">
-                        <img src="hoodie_brown.png" alt="HOODIE_01 Коричневый" class="product-image w-full h-auto cursor-zoom-in">
-                        <img src="hoodie_brownBS.png" alt="HOODIE_01 Коричневый BS" class="product-image w-full h-auto cursor-zoom-in">
+                        <img src="hoodie_grey.png" alt="HOODIE_01 Серый" class="product-image w-full h-auto cursor-zoom-in">
+                        <img src="hoodie_greyBS.png" alt="HOODIE_01 Серый BS" class="product-image w-full h-auto cursor-zoom-in">
                     </div>
                     <button class="prev-btn absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#3d0a05] w-8 h-8 rounded-full flex items-center justify-center shadow transition-smooth" aria-label="Предыдущее изображение">
                         <i class="fas fa-chevron-left text-sm"></i>
@@ -286,17 +286,18 @@
                     <div class="mb-6 flex justify-between items-start">
                         <div>
                             <h1 class="text-2xl md:text-3xl font-normal tracking-tighter">HOODIE_01</h1>
-                            <p class="text-gray-500 text-sm mt-1">Коричневый</p>
+                            <p class="text-gray-500 text-sm mt-1">Серый</p>
                         </div>
+                        
                         <!-- Updated color switcher block -->
                         <div class="flex flex-col items-end">
                             <span class="text-xs text-gray-500 mb-1">ДРУГОЙ ЦВЕТ</span>
                             <div class="flex gap-2">
-                                <a href="hoodie_01black.html" class="color-switch relative group active">
+                                <a href="hoodie_01black.html" class="color-switch relative group">
                                     <div class="color-square" style="background-color: #412f26;"></div>
                                     <span class="color-tooltip absolute -bottom-8 right-0 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Коричневый</span>
                                 </a>
-                                <a href="hoodie_01grey.html" class="color-switch relative group">
+                                <a href="hoodie_01grey.html" class="color-switch relative group active">
                                     <div class="color-square" style="background-color: #b8b8b8;"></div>
                                     <span class="color-tooltip absolute -bottom-8 right-0 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Серый</span>
                                 </a>
@@ -307,10 +308,9 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="thumbnail-gallery flex gap-3 mb-6">
-                        <img src="hoodie_brown.png" class="thumbnail w-14 h-14 object-cover cursor-pointer rounded-sm active" data-index="0" data-color="Коричневый" alt="Миниатюра HOODIE_01 Коричневый">
-                        <img src="hoodie_brownBS.png" class="thumbnail w-14 h-14 object-cover cursor-pointer rounded-sm" data-index="1" data-color="Коричневый" alt="Миниатюра HOODIE_01 Коричневый BS">
+                        <img src="hoodie_grey.png" class="thumbnail w-14 h-14 object-cover cursor-pointer rounded-sm active" data-index="0" data-color="Серый" alt="Миниатюра HOODIE_01 Серый">
+                        <img src="hoodie_greyBS.png" class="thumbnail w-14 h-14 object-cover cursor-pointer rounded-sm" data-index="1" data-color="Серый" alt="Миниатюра HOODIE_01 Серый BS">
                     </div>
                     <div class="mb-6">
                         <ul class="space-y-2 text-sm">
@@ -450,7 +450,7 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const images = ["hoodie_brown.png", "hoodie_brownBS.png"];
+            const images = ["hoodie_grey.png", "hoodie_greyBS.png"];
             let currentIndex = 0;
             const slides = document.querySelector(".slides");
             const slideImages = slides.querySelectorAll(".product-image");
@@ -646,7 +646,7 @@
                     cartOverlay.classList.add("hidden");
                     cartModal.classList.remove("closing");
                     document.body.classList.remove("modal-open");
-                }, 300);
+                }, 300); // Длительность анимации
             });
 
             // Закрытие по клику на оверлей
@@ -954,7 +954,5 @@
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9334581b2d49bcc8',t:'MTc0NTE0ODk4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9334eeb0394eb004',t:'MTc0NTE1NTE1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'933523d2791e53d8',t:'MTc0NTE1NzMzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9335ab937882b059',t:'MTc0NTE2Mjg5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9335ceb94dfcb0bd',t:'MTc0NTE2NDMzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>

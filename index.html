@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SHYNEMOSCOW - Urban Streetwear Collection. Explore our latest hoodies and more.">
-    <meta name="keywords" content="SHYNEMOSCOW, streetwear, urban fashion, hoodies, Russian design">
-    <meta name="author" content="SHYNEMOSCOW">
+    <meta name="description" content="Сияй, Москва!">
     <title>SHYNEMOSCOW - Сияй, Москва!</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Impact&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Упрощенные анимации */
+        /* Smooth Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -26,40 +24,24 @@
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.03); }
             100% { transform: scale(1); }
         }
 
-        /* Эффекты для элементов */
+        /* Animation Classes */
         .fade-in {
-            animation: fadeIn 1.5s ease-out forwards;
+            animation: fadeIn 1.2s ease-out forwards;
         }
 
         .slide-up {
-            animation: slideUp 1s ease-out forwards;
+            animation: slideUp 0.8s ease-out forwards;
         }
 
         .pulse {
-            animation: pulse 2s infinite;
+            animation: pulse 2.5s infinite ease-in-out;
         }
 
-        /* Стили для текста (упрощенные) */
-        .brand-text {
-            letter-spacing: 0.5em;
-        }
-
-        /* Стили для изображения */
-        #hoodie-image {
-            max-width: 300px;
-            width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            margin-top: 32px;
-            margin-bottom: 36px;
-        }
-
-        /* Стили для видеофона */
+        /* Video Background */
         .video-background {
             position: fixed;
             top: 0;
@@ -70,43 +52,79 @@
             z-index: -1;
         }
 
-        /* Затемнение видеофона для лучшей читаемости */
+        /* Video Overlay for Better Text Contrast */
         .video-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             z-index: -1;
         }
-        /* Добавляем новые стили для текста */
+
+        /* Main Text Styling */
         #main-text {
-            letter-spacing: 0.05em;
-            font-weight: 500;
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 0.1em;
             text-transform: lowercase;
-            -webkit-font-smoothing: antialiased; /* Сглаживание для WebKit */
-            -moz-osx-font-smoothing: grayscale; /* Сглаживание для Firefox */
-            text-rendering: optimizeLegibility; /* Оптимизация читаемости */
-            filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.3)); /* Мягкая тень для четкости */
-            text-shadow: 0 0 0.5px white, 0 0 0.5px white;
+            font-size: 5rem;
+            line-height: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
-        /* Альтернативный вариант с другим шрифтом */
-        @font-face {
-            font-family: 'Neue Montreal';
-            src: url('fonts/NeueMontreal-Medium.woff2') format('woff2');
-            font-weight: 500;
-            font-style: normal;
-            font-display: swap;
+        /* Hoodie Image */
+        #hoodie-image {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            margin-top: 2rem;
+            margin-bottom: 2.5rem;
         }
 
-        /* Мобильная адаптивность */
+        /* Enter Button Styling */
+        #enter-btn {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem 2rem;
+            background: transparent;
+            border: 2px solid white;
+            border-radius: 50px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        #enter-btn:hover {
+            background: white;
+            color: black;
+            border-color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Footer and Social Links */
+        .social-links a {
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
             #main-text {
-                font-size: 2.8rem !important;
-                letter-spacing: 0.04em !important;
-                filter: drop-shadow(0 0 0.5px rgba(255, 255, 255, 0.3)); /* Меньшая тень для мобильных */
+                font-size: 3rem !important;
+                letter-spacing: 0.08em !important;
             }
 
             #hoodie-image {
@@ -121,11 +139,15 @@
             .social-links {
                 gap: 1rem !important;
             }
+
+            .social-links i {
+                font-size: 1.5rem !important;
+            }
         }
     </style>
 </head>
 <body class="text-white overflow-hidden h-screen">
-    <!-- Видео фон -->
+    <!-- Video Background -->
     <video class="video-background" autoplay muted loop playsinline>
         <source src="Start_Vid.mp4" type="video/mp4">
         Ваш браузер не поддерживает видео в качестве фона.
@@ -135,43 +157,38 @@
     <!-- Splash Screen -->
     <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-1000">
         <div class="relative z-10 text-center px-4">
-            <!-- Вариант 1: Сохраняем текущий шрифт с улучшениями -->
-            <h1 id="main-text" class="text-6xl md:text-8xl tracking-tighter text-white opacity-0" style="font-family: 'Impact', sans-serif;">
+            <!-- Main Title -->
+            <h1 id="main-text" class="text-6xl md:text-8xl text-white opacity-0">
                 shynemoscow
             </h1>
 
-            <!-- Image with delay -->
-            <img id="hoodie-image" src="start_pic.png" alt="SHYNEMOSCOW Hoodie" class="opacity-0 mb-8">
+            <!-- Hoodie Image -->
+            <img id="hoodie-image" src="start_pic.png" alt="SHYNEMOSCOW Hoodie" class="opacity-0">
 
-            <!-- Loading bar -->
-            <div class="w-full max-w-xs mx-auto h-1 bg-gray-800 rounded-full overflow-hidden">
-                <div id="loading-bar" class="h-full bg-white w-0 transition-all duration-[3s] ease-out"></div>
-            </div>
-
-            <!-- Enter button (hidden initially) -->
-            <button id="enter-btn" class="mt-8 px-8 py-3 border-2 border-white rounded-full opacity-0 hover:bg-white hover:text-black transition-all duration-300 flex items-center mx-auto">
-                <span class="mr-2 text-sm md:text-base">В МАГАЗИН</span>
+            <!-- Enter Button -->
+            <button id="enter-btn" class="mt-8 opacity-0 mx-auto">
+                <span>В МАГАЗИН</span>
                 <i class="fas fa-arrow-right"></i>
             </button>
         </div>
 
-        <!-- Footer note -->
-        <div class="absolute bottom-6 left-0 right-0 text-center text-xs text-gray-500 opacity-0" id="footer-note">
+        <!-- Footer Note -->
+        <div class="absolute bottom-6 left-0 right-0 text-center text-xs text-gray-300 opacity-0" id="footer-note">
             <div class="social-links flex justify-center gap-6 mb-2">
-                <a href="https://www.instagram.com/shynemoscow" target="_blank" class="text-white/70 hover:text-white transition-colors">
-                    <i class="fab fa-instagram fa-2x"></i>
+                <a href="https://www.instagram.com/shynemoscow" target="_blank" class="text-white/70 hover:text-white">
+                    <i class="fab fa-instagram fa-lg"></i>
                 </a>
-                <a href="https://t.me/shynemoscow" target="_blank" class="text-white/70 hover:text-white transition-colors">
-                    <i class="fab fa-telegram fa-2x"></i>
+                <a href="https://t.me/shynemoscow" target="_blank" class="text-white/70 hover:text-white">
+                    <i class="fab fa-telegram fa-lg"></i>
                 </a>
             </div>
             © 2025 SHYNEMOSCOW.
         </div>
     </div>
 
-    <!-- Main content (hidden initially) -->
+    <!-- Main Content (Hidden Initially) -->
     <div id="main-content" class="hidden">
-        <!-- Контент будет загружен из hoodie_01black.html -->
+        <!-- Content will be loaded from main.html -->
     </div>
 
     <script>
@@ -179,27 +196,23 @@
             const splashScreen = document.getElementById('splash-screen');
             const mainText = document.getElementById('main-text');
             const hoodieImage = document.getElementById('hoodie-image');
-            const loadingBar = document.getElementById('loading-bar');
             const enterBtn = document.getElementById('enter-btn');
             const footerNote = document.getElementById('footer-note');
             const mainContent = document.getElementById('main-content');
 
-            // Initial animations
+            // Initial Animations
             setTimeout(() => {
-                // Появление текста "shynemoscow" с анимацией fade-in
+                // Fade in "shynemoscow" text
                 mainText.classList.remove('opacity-0');
                 mainText.classList.add('fade-in');
-
-                // Start loading bar animation
-                loadingBar.style.width = '100%';
 
                 // Show hoodie image after delay
                 setTimeout(() => {
                     hoodieImage.classList.remove('opacity-0');
                     hoodieImage.classList.add('fade-in');
-                }, 1000);
+                }, 800);
 
-                // Show enter button and footer after loading completes
+                // Show enter button and footer after a slight delay
                 setTimeout(() => {
                     enterBtn.classList.remove('opacity-0');
                     enterBtn.classList.add('slide-up');
@@ -207,26 +220,23 @@
                     footerNote.classList.remove('opacity-0');
                     footerNote.classList.add('fade-in');
 
-                    // Add pulse effect to button after it appears
+                    // Add pulse effect to button
                     setTimeout(() => {
                         enterBtn.classList.add('pulse');
-                    }, 500);
-                }, 3000);
-            }, 500);
+                    }, 300);
+                }, 1600);
+            }, 300);
 
-            // Enter button click handler
+            // Enter Button Click Handler
             enterBtn.addEventListener('click', function() {
-                // Fade out splash screen
                 splashScreen.style.opacity = '0';
-
-                // Load main content after fade out
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
-                    window.location.href = "hoodie_01black.html";
+                    window.location.href = "main.html";
                 }, 1000);
             });
 
-            // Keyboard support for accessibility
+            // Keyboard Support for Accessibility
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -234,19 +244,19 @@
                 }
             });
 
-            // Preload hoodie_01black.html content (optional, for smoother transition)
+            // Preload main.html Content (Optional)
             function preloadIndexContent() {
-                fetch('hoodie_01black.html')
+                fetch('main.html')
                     .then(response => response.text())
                     .then(html => {
                         mainContent.innerHTML = html;
                     })
-                    .catch(error => console.error('Ошибка загрузки hoodie_01black.html:', error));
+                    .catch(error => console.error('Ошибка загрузки main.html:', error));
             }
 
-            // Start preloading
             preloadIndexContent();
         });
     </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'932f6d477a0fbcd8',t:'MTc0NTA5NzQyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>

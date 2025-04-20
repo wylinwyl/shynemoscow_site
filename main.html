@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHYNEMOSCOW | Главная</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-wrapper {
+            display: inline-flex;
+            animation: marquee 30s linear infinite;
+        }
+        .marquee-content {
+            flex-shrink: 0;
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            border: none;
+            overflow: hidden;
+        }
+        .product-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* Maintain aspect ratio (4:3) */
+        }
+        .product-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            max-height: 28rem; /* Увеличьте с 24rem */
+            object-fit: contain;
+            padding: 0.75rem;
+            transition: opacity 0.3s ease;
+        }
+        .product-card .secondary-image {
+            opacity: 0;
+        }
+        .image-container:hover .primary-image {
+            opacity: 0;
+        }
+        .image-container:hover .secondary-image {
+            opacity: 1;
+        }
+        
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10;
+        }
+        .cart-modal {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            box-shadow: -10px 0 15px -3px rgba(0, 0, 0, 0.1), -4px 0 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 20;
+        }
+        .cart-modal.open {
+            transform: translateX(0);
+        }
+        .cart-modal.closing {
+            transform: translateX(100%);
+        }
+        
+        body {
+            font-family: 'Manrope', sans-serif;
+            color: #111827;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Archivo Black', sans-serif;
+            letter-spacing: -0.025em;
+            color: #3d0a05;
+        }
+        
+        .transition-smooth {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        body.modal-open {
+            overflow-x: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .header-logo {
+                padding-left: 0.5rem !important; /* Минимальный отступ слева */
+            }
+            .header-cart {
+                padding-right: 0.5rem !important; /* Минимальный отступ справа */
+            }
+            header .flex {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            .product-card img {
+                padding: 0.5rem;
+                max-height: 24rem;
+            }
+        }
+
+        /* Ensure specified text elements are #3d0a05 */
+        .header-logo, .cart-btn span, .product-card h3, .footer-links button, .footer-links a {
+            color: #3d0a05 !important;
+        }
+
+        /* Cart icon color */
+        .cart-btn i {
+            color: #3d0a05 !important;
+        }
+        .cookie-modal {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 90%;
+            width: 32rem;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            z-index: 30;
+            padding: 1.5rem;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translate(-50%, 100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+
+        .cookie-modal.hidden {
+            display: none;
+        }
+
+        .cookie-modal button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .cookie-modal .accept-btn {
+            background: #3d0a05;
+            color: #fff;
+            border: none;
+        }
+
+        .cookie-modal .accept-btn:hover {
+            background: #2c0703;
+        }
+
+        .cookie-modal .decline-btn {
+            background: transparent;
+            border: 1px solid #3d0a05;
+            color: #3d0a05;
+        }
+
+        .cookie-modal .decline-btn:hover {
+            background: #f5f5f5;
+        }
+
+        @media (max-width: 768px) {
+            .cookie-modal {
+                width: 95%;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-white antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-20 bg-white border-b border-gray-100">
+        <div class="flex justify-between items-center w-full py-4 px-4 lg:px-0">
+            <h1 class="text-3xl md:text-4xl font-normal tracking-tighter m-0 p-0 pl-4">
+                <a href="main.html" class="block header-logo" style="font-family: Impact, sans-serif;">shynemoscow</a>
+            </h1>
+            <div class="flex items-center gap-0 pr-4 header-cart">
+                <button class="cart-btn px-4 py-2 flex items-center gap-2 hover:bg-gray-100 rounded-md transition-all" aria-label="Открыть корзину">
+                    <i class="fas fa-shopping-bag text-lg"></i>
+                    <span class="font-normal">КОРЗИНА</span>
+                </button>
+                <span class="cart-count text-[#3d0a05] text-sm font-medium hidden" aria-live="polite">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Marquee -->
+    <div class="marquee bg-[#3d0a05] text-white overflow-hidden py-2">
+        <div class="marquee-wrapper">
+            <div class="marquee-content whitespace-nowrap text-xs md:text-sm font-medium tracking-wider">
+                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ●
+            </div>
+            <div class="marquee-content whitespace-nowrap text-xs md:text-sm font-medium tracking-wider">
+                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ●
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-1 py-8">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-normal tracking-tighter mb-8 text-center">COLLECTION</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Product Card 1 -->
+                <div class="product-card bg-white">
+                    <a href="hoodie_01black.html" aria-label="Перейти к HOODIE_01 Коричневый">
+                        <div class="image-container">
+                            <img src="hoodie_brown.png" alt="HOODIE_01 Коричневый" class="product-image primary-image">
+                            <img src="hoodie_brownBS.png" alt="HOODIE_01 Коричневый BS" class="product-image secondary-image">
+                        </div>
+                    </a>
+                    <div class="p-4">
+                        <h3 class="text-base font-normal tracking-tighter mb-1">
+                            <a href="hoodie_01black.html" class="hover:text-gray-600 transition-smooth">HOODIE_01</a>
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-2">Коричневый</p>
+                        <p class="text-base font-bold">4 500 ₽</p>
+                    </div>
+                </div>
+                <!-- Product Card 2 -->
+                <div class="product-card bg-white">
+                    <a href="hoodie_01grey.html" aria-label="Перейти к HOODIE_01 Серый">
+                        <div class="image-container">
+                            <img src="hoodie_grey.png" alt="HOODIE_01 Серый" class="product-image primary-image">
+                            <img src="hoodie_greyBS.png" alt="HOODIE_01 Серый BS" class="product-image secondary-image">
+                        </div>
+                    </a>
+                    <div class="p-4">
+                        <h3 class="text-base font-normal tracking-tighter mb-1">
+                            <a href="hoodie_01grey.html" class="hover:text-gray-600 transition-smooth">HOODIE_01</a>
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-2">Серый</p>
+                        <p class="text-base font-bold">4 500 ₽</p>
+                    </div>
+                </div>
+                <!-- Product Card 3 -->
+                <div class="product-card bg-white">
+                    <a href="hoodie_01white.html" aria-label="Перейти к HOODIE_01 Белый">
+                        <div class="image-container">
+                            <img src="hoodie_white.png" alt="HOODIE_01 Белый" class="product-image primary-image">
+                            <img src="hoodie_whiteBS.png" alt="HOODIE_01 Белый BS" class="product-image secondary-image">
+                        </div>
+                    </a>
+                    <div class="p-4">
+                        <h3 class="text-base font-normal tracking-tighter mb-1">
+                            <a href="hoodie_01white.html" class="hover:text-gray-600 transition-smooth">HOODIE_01</a>
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-2">Белый</p>
+                        <p class="text-base font-bold">4 500 ₽</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Оверлей -->
+    <div id="cart-overlay" class="modal-overlay fixed inset-0 z-50 hidden" aria-hidden="true"></div>
+    <!-- Корзина -->
+    <div id="cart-modal" class="cart-modal fixed right-0 top-0 h-full w-full max-w-md bg-white overflow-y-auto z-50 hidden" role="dialog" aria-label="Корзина">
+        <div class="p-6 sticky top-0 bg-white border-b border-gray-100 z-10">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">ВАША КОРЗИНА</h2>
+                <span class="close-cart text-2xl cursor-pointer hover:text-gray-500 transition-smooth" aria-label="Закрыть корзину">×</span>
+            </div>
+        </div>
+        <div id="cart-items" class="cart-items p-6 space-y-4" aria-live="polite">
+            <div class="empty-cart text-center py-12">
+                <i class="fas fa-shopping-bag text-3xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500">Ваша корзина пуста</p>
+            </div>
+        </div>
+        <div class="cart-footer p-6 sticky bottom-0 bg-white border-t border-gray-200">
+            <div class="flex justify-between mb-4">
+                <p class="font-medium">Итого</p>
+                <p id="cart-total" class="font-bold">0 ₽</p>
+            </div>
+            <button class="checkout-btn w-full bg-[#3d0a05] text-white py-3 px-6 hover:bg-[#2c0703] transition-smooth rounded text-sm font-medium" aria-label="Оформить заказ">ОФОРМИТЬ ЗАКАЗ</button>
+        </div>
+    </div>
+
+    <!-- Contacts modal -->
+    <div id="contacts-modal" class="modal hidden fixed inset-0 z-50 modal-overlay flex items-center justify-center p-4" role="dialog" aria-label="Контакты">
+        <div class="bg-white p-6 max-w-md rounded-lg w-full">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold">КОНТАКТЫ</h3>
+                <span class="close-contacts text-2xl cursor-pointer hover:text-gray-500 transition-smooth" aria-label="Закрыть контакты">×</span>
+            </div>
+            <div class="text-sm">
+                <p class="mb-2">По вопросам пишите на почту:</p>
+                <p class="text-base font-medium mb-4"><a href="/cdn-cgi/l/email-protection#d9aab1a0b7bcb4b6aabab6ae99b0b7bbb6a1f7abac" class="hover:text-gray-600 transition-smooth">shynemoscow@inbox.ru</a></p>
+                <p class="mt-4">
+                    <a href="https://t.me/shynemoscow" target="_blank" class="inline-flex items-center text-[#3d0a05] hover:text-gray-600 transition-smooth">
+                        <i class="fab fa-telegram mr-2"></i> Telegram
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky "back to top" button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-[#3d0a05] text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:bg-[#2c0703] transition-smooth hidden" aria-label="Вернуться наверх">
+        <i class="fas fa-arrow-up text-sm"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="py-6 border-t border-gray-100">
+        <div class="container mx-auto px-4 flex flex-col items-center">
+            <p class="text-xs text-gray-500 footer-copyright mb-2">© 2025 SHYNEMOSCOW.</p>
+            <div class="flex items-center gap-4 footer-links">
+                <button id="contacts-btn" class="text-xs underline hover:text-gray-600 transition-smooth" aria-label="Открыть контакты">КОНТАКТЫ</button>
+                <a href="offer.html" class="text-xs underline hover:text-gray-600 transition-smooth">ПУБЛИЧНАЯ ОФЕРТА</a>
+                <a href="policy.html" class="text-xs underline hover:text-gray-600 transition-smooth">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cartModal = document.getElementById("cart-modal");
+            const cartOverlay = document.getElementById("cart-overlay");
+            const cartBtn = document.querySelector(".cart-btn");
+            const closeCart = document.querySelector(".close-cart");
+            const cartItems = document.getElementById("cart-items");
+            const cartTotal = document.getElementById("cart-total");
+            const checkoutBtn = document.querySelector(".checkout-btn");
+            const cartCount = document.querySelector(".cart-count");
+            const backToTopBtn = document.getElementById("back-to-top");
+            const contactsBtn = document.getElementById("contacts-btn");
+            const contactsModal = document.getElementById("contacts-modal");
+            const closeContacts = document.querySelector(".close-contacts");
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            // Cookie Consent
+            const cookieModal = document.getElementById("cookie-modal");
+            const acceptCookiesBtn = document.getElementById("accept-cookies");
+            const declineCookiesBtn = document.getElementById("decline-cookies");
+
+            function showCookieModal() {
+                if (!localStorage.getItem("cookieConsent")) {
+                    cookieModal.classList.remove("hidden");
+                }
+            }
+
+            function setCookieConsent(consent) {
+                localStorage.setItem("cookieConsent", consent);
+                cookieModal.classList.add("hidden");
+            }
+
+            acceptCookiesBtn.addEventListener("click", () => setCookieConsent("accepted"));
+            declineCookiesBtn.addEventListener("click", () => setCookieConsent("declined"));
+
+            // Показать модал при загрузке, если нет согласия
+            showCookieModal();
+
+            // Динамическая высота main
+            function updateMainHeight() {
+                const header = document.querySelector("header");
+                const marquee = document.querySelector(".marquee");
+                const footer = document.querySelector("footer");
+                const main = document.querySelector("main");
+
+                const headerHeight = header.offsetHeight;
+                const marqueeHeight = marquee.offsetHeight;
+                const footerHeight = footer.offsetHeight;
+
+                const totalHeight = headerHeight + marqueeHeight + footerHeight;
+                main.style.minHeight = `calc(100vh - ${totalHeight}px)`;
+            }
+
+            updateMainHeight();
+            window.addEventListener("resize", updateMainHeight);
+
+            updateCartCount();
+
+            // Открытие/закрытие модальных окон
+            function openModal(modal, overlay = null) {
+                modal.classList.remove("hidden");
+                if (overlay) {
+                    overlay.classList.remove("hidden");
+                }
+                setTimeout(() => {
+                    if (modal.classList.contains("cart-modal")) {
+                        modal.classList.add("open");
+                    }
+                }, 10);
+                document.body.classList.add("modal-open");
+                modal.focus();
+            }
+
+            function closeModal(modal) {
+                modal.classList.add("hidden");
+                document.body.classList.remove("modal-open");
+            }
+
+            contactsBtn.addEventListener("click", () => openModal(contactsModal));
+            closeContacts.addEventListener("click", () => closeModal(contactsModal));
+            contactsModal.addEventListener("click", (e) => {
+                if (e.target === contactsModal) closeModal(contactsModal);
+            });
+
+            // Кнопка "наверх"
+            window.addEventListener("scroll", () => {
+                backToTopBtn.classList.toggle("hidden", window.pageYOffset <= 300);
+            });
+            backToTopBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+
+            // Открытие корзины
+            cartBtn.addEventListener("click", () => {
+                openModal(cartModal, cartOverlay);
+                updateCart();
+            });
+
+            // Закрытие корзины
+            closeCart.addEventListener("click", () => {
+                cartModal.classList.add("closing");
+                cartModal.classList.remove("open");
+                setTimeout(() => {
+                    cartModal.classList.add("hidden");
+                    cartOverlay.classList.add("hidden");
+                    cartModal.classList.remove("closing");
+                    document.body.classList.remove("modal-open");
+                }, 300);
+            });
+
+            // Закрытие по клику на оверлей
+            cartOverlay.addEventListener("click", () => {
+                cartModal.classList.add("closing");
+                cartModal.classList.remove("open");
+                setTimeout(() => {
+                    cartModal.classList.add("hidden");
+                    cartOverlay.classList.add("hidden");
+                    cartModal.classList.remove("closing");
+                    document.body.classList.remove("modal-open");
+                }, 300);
+            });
+
+            checkoutBtn.addEventListener("click", function () {
+                if (cart.length === 0) {
+                    alert("Корзина пуста");
+                    return;
+                }
+                const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                window.location.href = `checkout.html?total=${total}`;
+            });
+
+            function updateCart() {
+                cartItems.innerHTML = "";
+                let total = 0;
+
+                if (cart.length === 0) {
+                    cartItems.innerHTML = `
+                        <div class="empty-cart text-center py-12">
+                            <i class="fas fa-shopping-bag text-3xl text-gray-300 mb-4"></i>
+                            <p class="text-gray-500">Ваша корзина пуста</p>
+                        </div>
+                    `;
+                } else {
+                    cart.forEach((item, index) => {
+                        const itemTotal = item.price * item.quantity;
+                        const cartItem = document.createElement("div");
+                        cartItem.classList.add("cart-item", "flex", "py-4", "border-b", "border-gray-100");
+                        cartItem.innerHTML = `
+                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
+                            <div class="flex-1 ml-4">
+                                <div class="flex justify-between">
+                                    <h4 class="font-medium text-sm">${item.name}</h4>
+                                    <span class="item-total font-medium text-sm">${itemTotal.toLocaleString('ru-RU')} ₽</span>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1">
+                                    <p>Размер: ${item.size} | Цвет: ${item.color}</p>
+                                </div>
+                                <div class="quantity-controls flex items-center mt-3">
+                                    <button class="decrease-qty px-2 py-1 border rounded text-xs" data-index="${index}" aria-label="Уменьшить количество ${item.name} размера ${item.size}">−</button>
+                                    <span class="quantity mx-2 w-6 text-center text-xs">${item.quantity}</span>
+                                    <button class="increase-qty px-2 py-1 border rounded text-xs" data-index="${index}" aria-label="Увеличить количество ${item.name} размера ${item.size}">+</button>
+                                </div>
+                            </div>
+                            <button class="remove-item ml-4 text-gray-400 hover:text-[#3d0a05] transition-smooth" data-index="${index}" aria-label="Удалить ${item.name} размера ${item.size} из корзины">
+                                <i class="fas fa-times text-sm"></i>
+                            </button>
+                        `;
+                        cartItems.appendChild(cartItem);
+                        total += itemTotal;
+                    });
+                }
+
+                cartTotal.textContent = `${total.toLocaleString('ru-RU')} ₽`;
+
+                document.querySelectorAll(".decrease-qty").forEach(button => {
+                    button.addEventListener("click", function() {
+                        const index = parseInt(this.getAttribute("data-index"));
+                        if (cart[index].quantity > 1) {
+                            cart[index].quantity--;
+                        } else {
+                            cart.splice(index, 1);
+                        }
+                        saveAndUpdateCart();
+                    });
+                });
+
+                document.querySelectorAll(".increase-qty").forEach(button => {
+                    button.addEventListener("click", function() {
+                        const index = parseInt(this.getAttribute("data-index"));
+                        cart[index].quantity++;
+                        saveAndUpdateCart();
+                    });
+                });
+
+                document.querySelectorAll(".remove-item").forEach(button => {
+                    button.addEventListener("click", function() {
+                        const index = parseInt(this.getAttribute("data-index"));
+                        cart.splice(index, 1);
+                        saveAndUpdateCart();
+                    });
+                });
+            }
+
+            function saveAndUpdateCart() {
+                localStorage.setItem("cart", JSON.stringify(cart));
+                updateCart();
+                updateCartCount();
+            }
+
+            function updateCartCount() {
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                if (totalItems > 0) {
+                    cartCount.textContent = totalItems;
+                    cartCount.classList.remove("hidden");
+                } else {
+                    cartCount.classList.add("hidden");
+                }
+            }
+
+            // Закрытие модальных окон по клавише Escape
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") {
+                    closeModal(cartModal);
+                    closeModal(contactsModal);
+                }
+            });
+        });
+    </script>
+    <!-- Error popup -->
+    <div id="error-popup" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-white p-8 rounded-lg text-center">
+            <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">ОШИБКА ПЛАТЕЖА</h3>
+            <p class="mb-6">Платеж не был завершен. Пожалуйста, попробуйте снова.</p>
+            <button id="close-error-popup" class="inline-flex items-center bg-black text-white px-6 py-3 rounded-lg font-bold hover:opacity-90 transition md:text-base text-sm">
+                <i class="fas fa-times mr-2"></i> ЗАКРЫТЬ
+            </button>
+        </div>
+    </div>
+
+    <!-- Success popup -->
+    <div id="success-popup" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-white p-8 rounded-lg text-center">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">ОПЛАТА УСПЕШНА!</h3>
+            <p class="mb-6">Ваш заказ №<span id="order-number">123456</span> успешно оплачен.</p>
+            <p class="text-sm text-gray-600 mb-8">Подробности заказа были отправлены на ваш email.</p>
+            <button id="close-success-popup" class="inline-flex items-center bg-black text-white px-6 py-3 rounded-lg font-bold hover:opacity-90 transition md:text-base text-sm">
+                <i class="fas fa-check mr-2"></i> ПОНЯТНО
+            </button>
+        </div>
+    </div>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9335be27bf05bfe0',t:'MTc0NTE2MzY1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <!-- Cookie Consent Modal -->
+    <div id="cookie-modal" class="cookie-modal hidden" role="dialog" aria-label="Согласие на использование cookies">
+        <div class="text-center">
+            <h3 class="text-lg font-bold mb-2 text-[#3d0a05]">Мы используем cookies</h3>
+            <p class="text-sm text-gray-600 mb-4">Этот сайт использует cookies для улучшения пользовательского опыта и аналитики. Продолжая использовать сайт, вы соглашаетесь с нашей <a href="policy.html" class="underline hover:text-gray-800">политикой конфиденциальности</a>.</p>
+            <div class="flex justify-center gap-4">
+                <button id="accept-cookies" class="accept-btn" aria-label="Принять cookies">Принять</button>
+                <button id="decline-cookies" class="decline-btn" aria-label="Отклонить cookies">Отклонить</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
