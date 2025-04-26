@@ -165,6 +165,10 @@
                 max-width: 28rem;
                 width: 100%;
             }
+            header .flex {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
         }
         
         @media (max-width: 768px) {
@@ -184,6 +188,44 @@
             }
             #popup-image {
                 cursor: default; /* Remove zoom cursor on mobile */
+            }
+            #back-to-top {
+                bottom: 3rem; /* Выше, чем было */
+                right: 1rem;
+                z-index: 40;
+            }
+            .footer-links {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                width: 100%;
+                padding: 0 1rem;
+            }
+            
+            .footer-links button, 
+            .footer-links a {
+                font-size: 0.65rem;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            
+            .footer-copyright {
+                text-align: center;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .footer-links {
+                gap: 1rem;
+            }
+            
+            .footer-links button, 
+            .footer-links a {
+                font-size: 0.75rem;
             }
         }
 
@@ -229,6 +271,40 @@
             outline-offset: 2px;
             transform: scale(1);
         }
+        .footer-links button, .footer-links a {
+            position: relative;
+            display: inline-block;
+        }
+        .footer-links button::after, .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #3d0a05;
+            transition: width 0.4s ease;
+        }
+        .footer-links button:hover::after, .footer-links a:hover::after {
+            width: 100%;
+        }
+        .cart-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .cart-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #3d0a05;
+            transition: width 0.4s ease;
+        }
+        .cart-btn:hover::after {
+            width: 100%;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen bg-white antialiased">
@@ -252,10 +328,10 @@
     <div class="marquee bg-[#3d0a05] text-white overflow-hidden py-2">
         <div class="marquee-wrapper">
             <div class="marquee-content whitespace-nowrap text-xs md:text-sm font-medium tracking-wider">
-                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ●
+                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>
             </div>
             <div class="marquee-content whitespace-nowrap text-xs md:text-sm font-medium tracking-wider">
-                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ●
+                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>
             </div>
         </div>
     </div>
@@ -420,12 +496,21 @@
             </div>
             <div class="text-sm">
                 <p class="mb-2">По вопросам пишите на почту:</p>
-                <p class="text-base font-medium mb-4"><a href="/cdn-cgi/l/email-protection#d9aab1a0b7bcb4b6aabab6ae99b0b7bbb6a1f7abac" class="hover:text-gray-600 transition-smooth">[email protected]</a></p>
-                <p class="mt-4">
+                <div class="flex items-center mb-4">
+                    <p class="text-base font-medium">shynemoscow@inbox.ru</p>
+                    <button class="copy-email ml-2 text-[#3d0a05] hover:text-[#2c0703] transition-smooth" aria-label="Копировать адрес электронной почты">
+                        <i class="fas fa-copy text-lg"></i>
+                    </button>
+                </div>
+                <p class="mb-2">Наши соцсети:</p>
+                <div class="flex items-center gap-6 mt-4">
                     <a href="https://t.me/shynemoscow" target="_blank" class="inline-flex items-center text-[#3d0a05] hover:text-gray-600 transition-smooth">
-                        <i class="fab fa-telegram mr-2"></i> Telegram
+                        <i class="fab fa-telegram-plane text-lg mr-2"></i> Telegram
                     </a>
-                </p>
+                    <a href="https://www.instagram.com/shynemoscow" target="_blank" class="inline-flex items-center text-[#3d0a05] hover:text-gray-600 transition-smooth">
+                        <i class="fab fa-instagram text-lg mr-2"></i> Instagram
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -440,9 +525,9 @@
         <div class="container mx-auto px-4 flex flex-col items-center">
             <p class="text-xs text-gray-500 footer-copyright mb-2">© 2025 SHYNEMOSCOW.</p>
             <div class="flex items-center gap-4 footer-links">
-                <button id="contacts-btn" class="text-xs underline hover:text-gray-600 transition-smooth" aria-label="Открыть контакты">КОНТАКТЫ</button>
-                <a href="offer.html" class="text-xs underline hover:text-gray-600 transition-smooth">ПУБЛИЧНАЯ ОФЕРТА</a>
-                <a href="policy.html" class="text-xs underline hover:text-gray-600 transition-smooth">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ</a>
+                <button id="contacts-btn" class="text-xs hover:text-gray-600 transition-smooth" aria-label="Открыть контакты">КОНТАКТЫ</button>
+                <a href="offer.html" class="text-xs hover:text-gray-600 transition-smooth">ПУБЛИЧНАЯ ОФЕРТА</a>
+                <a href="policy.html" class="text-xs hover:text-gray-600 transition-smooth">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ</a>
             </div>
         </div>
     </footer>
@@ -730,36 +815,77 @@
                 window.location.href = `checkout.html?total=${total}`;
             });
 
-            // Свайп
+            // Улучшенная обработка свайпов
             let touchStartX = 0;
-            let touchEndX = 0;
+            let touchStartY = 0;
+            let touchCurrentX = 0;
+            let touchCurrentY = 0;
+            let isDragging = false;
+            let currentTranslate = 0;
+            let slideWidth = slides.offsetWidth / images.length;
 
             slides.addEventListener("touchstart", (e) => {
-                touchStartX = e.changedTouches[0].screenX;
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                currentTranslate = -currentIndex * slideWidth;
+                slides.style.transition = "none";
+                isDragging = true;
             });
 
             slides.addEventListener("touchmove", (e) => {
+                if (!isDragging) return;
+
+                touchCurrentX = e.touches[0].clientX;
+                touchCurrentY = e.touches[0].clientY;
+                const deltaX = touchCurrentX - touchStartX;
+                const deltaY = touchCurrentY - touchStartY;
+
+                // Проверяем вертикальное движение
+                if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 40) {
+                    isDragging = false;
+                    slides.style.transition = "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+                    updateSlidePosition();
+                    return;
+                }
+
+                // Горизонтальный свайп
                 e.preventDefault();
-                touchEndX = e.changedTouches[0].screenX;
+                const translateX = currentTranslate + deltaX;
+                const maxTranslate = 0;
+                const minTranslate = -(images.length - 1) * slideWidth;
+                slides.style.transform = `translateX(${Math.max(minTranslate, Math.min(maxTranslate, translateX))}px)`;
             });
 
             slides.addEventListener("touchend", (e) => {
-                const swipeDistance = touchStartX - touchEndX;
-                if (Math.abs(swipeDistance) > 30) {
-                    if (swipeDistance > 0 && currentIndex < images.length - 1) {
-                        currentIndex++;
-                        updateSlidePosition();
-                        updateActiveThumbnail();
-                        updateDotIndicator();
-                    } else if (swipeDistance < 0 && currentIndex > 0) {
+                if (!isDragging) return;
+                isDragging = false;
+
+                const deltaX = touchCurrentX - touchStartX;
+                const threshold = slideWidth * 0.3;
+
+                if (Math.abs(deltaX) > threshold) {
+                    if (deltaX > 0 && currentIndex > 0) {
                         currentIndex--;
-                        updateSlidePosition();
-                        updateActiveThumbnail();
-                        updateDotIndicator();
+                    } else if (deltaX < 0 && currentIndex < images.length - 1) {
+                        currentIndex++;
                     }
                 }
+
+                slides.style.transition = "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+                updateSlidePosition();
+                updateActiveThumbnail();
+                updateDotIndicator();
+
                 touchStartX = 0;
-                touchEndX = 0;
+                touchCurrentX = 0;
+                touchStartY = 0;
+                touchCurrentY = 0;
+            });
+
+            // Обновление ширины слайда при изменении размера окна
+            window.addEventListener("resize", () => {
+                slideWidth = slides.offsetWidth / images.length;
+                updateSlidePosition();
             });
 
             function updateCart() {
@@ -949,6 +1075,17 @@
                     closeModal(errorPopup);
                 }
             });
+        });
+        const copyEmailBtn = document.querySelector(".copy-email");
+        copyEmailBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText("shynemoscow@inbox.ru")
+                .then(() => {
+                    copyEmailBtn.innerHTML = '<i class="fas fa-check text-lg"></i>';
+                    setTimeout(() => {
+                        copyEmailBtn.innerHTML = '<i class="fas fa-copy text-lg"></i>';
+                    }, 1000);
+                })
+                .catch(err => console.error("Ошибка копирования:", err));
         });
     </script>
     <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9334581b2d49bcc8',t:'MTc0NTE0ODk4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>

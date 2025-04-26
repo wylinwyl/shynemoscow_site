@@ -39,7 +39,7 @@ try {
 
     // Инициализация клиента
     $client = new Client();
-    $client->setAuth('1055647', 'live_gkpVoJMfLw3a5wMMV0lA1y7jADfxrOj_DXWwKdRqc5w');
+    $client->setAuth('1055647', 'live_7e2eLPplW9Iwm4ER3DdUwM_MR-iwsCOimNXFNsi4heA');
 
     // Подготовка товаров для чека
     $items = [];
@@ -74,7 +74,7 @@ try {
         ],
         'confirmation' => [
             'type' => 'redirect',
-            'return_url' => 'https://shynemoscow.ru/index.html?payment_id=' . $idempotenceKey
+            'return_url' => 'https://shynemoscow.ru/main.html?payment_id=' . $idempotenceKey
         ],
         'description' => $data['description'] ?? 'Оплата заказа',
         'metadata' => array_merge($data['metadata'] ?? [], ['idempotenceKey' => $idempotenceKey]),

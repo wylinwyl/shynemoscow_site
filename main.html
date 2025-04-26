@@ -4,11 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHYNEMOSCOW | Главная</title>
+    <meta name="description" content="SHYNEMOSCOW — стильные худи премиум-качества в Москве. Доступные цвета: коричневый, серый, белый. Оверсайз крой, доставка по России. Оформляйте заказ до XX.XX.25!">
+    <meta name="keywords" content="SHYNEMOSCOW, худи, одежда, мода, коричневый, серый, белый, Москва">
+    <meta name="author" content="SHYNEMOSCOW">
+    <meta property="og:title" content="SHYNEMOSCOW | Интернет-магазин стильных худи">
+    <meta property="og:description" content="Ознакомьтесь с коллекцией худи SHYNEMOSCOW в коричневом, сером и белом цветах. Качественные материалы и оверсайз крой.">
+    <meta property="og:image" content="https://shynemoscow.com/hoodie_brown.png">
+    <meta property="og:url" content="https://shynemoscow.com/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SHYNEMOSCOW | Интернет-магазин стильных худи">
+    <meta name="twitter:description" content="Ознакомьтесь с коллекцией худи SHYNEMOSCOW в коричневом, сером и белом цветах.">
+    <meta name="twitter:image" content="https://shynemoscow.com/hoodie_brown.png">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Существующие стили */
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -24,41 +37,36 @@
         .marquee-content {
             flex-shrink: 0;
         }
-        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
         .product-card {
             transition: all 0.3s ease;
             border: none;
             overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
         }
         .product-card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
         }
         .image-container {
             position: relative;
             width: 100%;
             padding-top: 100%; /* Maintain aspect ratio (4:3) */
         }
-        .product-card img {
+        .product-card .main-image {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            max-height: 28rem; /* Увеличьте с 24rem */
+            max-height: 28rem;
             object-fit: contain;
             padding: 0.75rem;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease-in-out;
         }
-        .product-card .secondary-image {
-            opacity: 0;
-        }
-        .image-container:hover .primary-image {
-            opacity: 0;
-        }
-        .image-container:hover .secondary-image {
-            opacity: 1;
-        }
-        
         .modal-overlay {
             background-color: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
@@ -67,7 +75,6 @@
         .cart-modal {
             transform: translateX(100%);
             transition: transform 0.3s ease-in-out;
-            box-shadow: -10px 0 15px -3px rgba(0, 0, 0, 0.1), -4px 0 6px -2px rgba(0, 0, 0, 0.05);
             z-index: 20;
         }
         .cart-modal.open {
@@ -76,7 +83,6 @@
         .cart-modal.closing {
             transform: translateX(100%);
         }
-        
         body {
             font-family: 'Manrope', sans-serif;
             color: #111827;
@@ -86,11 +92,9 @@
             letter-spacing: -0.025em;
             color: #3d0a05;
         }
-        
         .transition-smooth {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -104,37 +108,80 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-        
         .hidden {
             display: none !important;
         }
         body.modal-open {
             overflow-x: hidden;
         }
-        
+        @media (min-width: 1024px) {
+            header .flex {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
         @media (max-width: 768px) {
             .header-logo {
-                padding-left: 0.5rem !important; /* Минимальный отступ слева */
+                padding-left: 0.5rem !important;
             }
             .header-cart {
-                padding-right: 0.5rem !important; /* Минимальный отступ справа */
+                gap: 0.25rem; /* Уменьшаем расстояние между элементами */
+                padding-right: 0.5rem !important;
+            }
+            .cart-count {
+                margin-left: -0.25rem; /* Сдвигаем счетчик левее */
+                font-size: 0.75rem; /* Можно немного уменьшить размер шрифта */
             }
             header .flex {
                 padding-left: 0.5rem;
                 padding-right: 0.5rem;
             }
-            .product-card img {
+            .product-card .main-image {
                 padding: 0.5rem;
                 max-height: 24rem;
             }
+            .cookie-modal {
+                width: 95%;
+                padding: 1rem;
+            }
+            #back-to-top {
+                bottom: 3rem;
+                right: 1rem;
+                z-index: 40;
+            }
+            .footer-links {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                width: 100%;
+                padding: 0 1rem;
+            }
+            .footer-links button, 
+            .footer-links a {
+                font-size: 0.65rem;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .footer-copyright {
+                text-align: center;
+            }
         }
-
-        /* Ensure specified text elements are #3d0a05 */
+        @media (min-width: 769px) {
+            .footer-links {
+                gap: 1rem;
+            }
+            .footer-links button, 
+            .footer-links a {
+                font-size: 0.75rem;
+            }
+        }
         .header-logo, .cart-btn span, .product-card h3, .footer-links button, .footer-links a {
             color: #3d0a05 !important;
         }
-
-        /* Cart icon color */
         .cart-btn i {
             color: #3d0a05 !important;
         }
@@ -147,22 +194,18 @@
             width: 32rem;
             background: #fff;
             border: 1px solid #e5e7eb;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 0.5rem;
             z-index: 30;
             padding: 1.5rem;
             animation: slideUp 0.3s ease;
         }
-
         @keyframes slideUp {
             from { transform: translate(-50%, 100%); opacity: 0; }
             to { transform: translate(-50%, 0); opacity: 1; }
         }
-
         .cookie-modal.hidden {
             display: none;
         }
-
         .cookie-modal button {
             padding: 0.5rem 1rem;
             border-radius: 0.25rem;
@@ -170,32 +213,64 @@
             font-weight: 500;
             transition: all 0.2s ease;
         }
-
         .cookie-modal .accept-btn {
             background: #3d0a05;
             color: #fff;
             border: none;
         }
-
         .cookie-modal .accept-btn:hover {
             background: #2c0703;
         }
-
         .cookie-modal .decline-btn {
             background: transparent;
             border: 1px solid #3d0a05;
             color: #3d0a05;
         }
-
         .cookie-modal .decline-btn:hover {
             background: #f5f5f5;
         }
-
-        @media (max-width: 768px) {
-            .cookie-modal {
-                width: 95%;
-                padding: 1rem;
-            }
+        .cart-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .cart-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: var(--underline-offset, 0);
+            width: 0;
+            height: 1px;
+            background-color: #3d0a05;
+            transition: width 0.4s ease;
+        }
+        .cart-btn:hover::after {
+            width: var(--underline-width, 0);
+        }
+        .footer-links button, .footer-links a {
+            position: relative;
+            display: inline-block;
+        }
+        .footer-links button::after, .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #3d0a05;
+            transition: width 0.4s ease;
+        }
+        .footer-links button:hover::after, .footer-links a:hover::after {
+            width: 100%;
+        }
+        .popup-container {
+            font-family: 'Manrope', sans-serif;
+            color: #111827;
+        }
+        .popup-container h3 {
+            font-family: 'Archivo Black', sans-serif;
+            letter-spacing: -0.025em;
+            color: #3d0a05;
         }
     </style>
 </head>
@@ -207,7 +282,7 @@
                 <a href="main.html" class="block header-logo" style="font-family: Impact, sans-serif;">shynemoscow</a>
             </h1>
             <div class="flex items-center gap-0 pr-4 header-cart">
-                <button class="cart-btn px-4 py-2 flex items-center gap-2 hover:bg-gray-100 rounded-md transition-all" aria-label="Открыть корзину">
+                <button class="cart-btn px-4 py-2 flex items-center gap-2 rounded-md transition-all" aria-label="Открыть корзину">
                     <i class="fas fa-shopping-bag text-lg"></i>
                     <span class="font-normal">КОРЗИНА</span>
                 </button>
@@ -220,10 +295,10 @@
     <div class="marquee bg-[#3d0a05] text-white overflow-hidden py-2">
         <div class="marquee-wrapper">
             <div class="marquee-content whitespace-nowrap text-xs md:text-sm font-medium tracking-wider">
-                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ●
+                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>
             </div>
             <div class="marquee-content whitespace-nowrap text-xs md:text-sm font-medium tracking-wider">
-                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ● ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25 ●
+                ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>ЗАКАЗ МОЖНО ОФОРМИТЬ ДО XX.XX.25<span class="mx-8">●</span>
             </div>
         </div>
     </div>
@@ -235,9 +310,8 @@
                 <!-- Product Card 1 -->
                 <div class="product-card bg-white">
                     <a href="hoodie_01black.html" aria-label="Перейти к HOODIE_01 Коричневый">
-                        <div class="image-container">
-                            <img src="hoodie_brown.png" alt="HOODIE_01 Коричневый" class="product-image primary-image">
-                            <img src="hoodie_brownBS.png" alt="HOODIE_01 Коричневый BS" class="product-image secondary-image">
+                        <div class="image-container" data-images='["hoodie_brown.png", "hoodie_brownBS.png"]'>
+                            <img src="hoodie_brown.png" alt="HOODIE_01 Коричневый" class="main-image" loading="lazy">
                         </div>
                     </a>
                     <div class="p-4">
@@ -251,9 +325,8 @@
                 <!-- Product Card 2 -->
                 <div class="product-card bg-white">
                     <a href="hoodie_01grey.html" aria-label="Перейти к HOODIE_01 Серый">
-                        <div class="image-container">
-                            <img src="hoodie_grey.png" alt="HOODIE_01 Серый" class="product-image primary-image">
-                            <img src="hoodie_greyBS.png" alt="HOODIE_01 Серый BS" class="product-image secondary-image">
+                        <div class="image-container" data-images='["hoodie_grey.png", "hoodie_greyBS.png"]'>
+                            <img src="hoodie_grey.png" alt="HOODIE_01 Серый" class="main-image" loading="lazy">
                         </div>
                     </a>
                     <div class="p-4">
@@ -267,9 +340,8 @@
                 <!-- Product Card 3 -->
                 <div class="product-card bg-white">
                     <a href="hoodie_01white.html" aria-label="Перейти к HOODIE_01 Белый">
-                        <div class="image-container">
-                            <img src="hoodie_white.png" alt="HOODIE_01 Белый" class="product-image primary-image">
-                            <img src="hoodie_whiteBS.png" alt="HOODIE_01 Белый BS" class="product-image secondary-image">
+                        <div class="image-container" data-images='["hoodie_white.png", "hoodie_whiteBS.png"]'>
+                            <img src="hoodie_white.png" alt="HOODIE_01 Белый" class="main-image" loading="lazy">
                         </div>
                     </a>
                     <div class="p-4">
@@ -318,12 +390,21 @@
             </div>
             <div class="text-sm">
                 <p class="mb-2">По вопросам пишите на почту:</p>
-                <p class="text-base font-medium mb-4"><a href="/cdn-cgi/l/email-protection#d9aab1a0b7bcb4b6aabab6ae99b0b7bbb6a1f7abac" class="hover:text-gray-600 transition-smooth">shynemoscow@inbox.ru</a></p>
-                <p class="mt-4">
+                <div class="flex items-center mb-4">
+                    <p class="text-base font-medium">shynemoscow@inbox.ru</p>
+                    <button class="copy-email ml-2 text-[#3d0a05] hover:text-[#2c0703] transition-smooth" aria-label="Копировать адрес электронной почты">
+                        <i class="fas fa-copy text-lg"></i>
+                    </button>
+                </div>
+                <p class="mb-2">Наши соцсети:</p>
+                <div class="flex items-center gap-6 mt-4">
                     <a href="https://t.me/shynemoscow" target="_blank" class="inline-flex items-center text-[#3d0a05] hover:text-gray-600 transition-smooth">
-                        <i class="fab fa-telegram mr-2"></i> Telegram
+                        <i class="fab fa-telegram-plane text-lg mr-2"></i> Telegram
                     </a>
-                </p>
+                    <a href="https://www.instagram.com/shynemoscow" target="_blank" class="inline-flex items-center text-[#3d0a05] hover:text-gray-600 transition-smooth">
+                        <i class="fab fa-instagram text-lg mr-2"></i> Instagram
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -338,9 +419,9 @@
         <div class="container mx-auto px-4 flex flex-col items-center">
             <p class="text-xs text-gray-500 footer-copyright mb-2">© 2025 SHYNEMOSCOW.</p>
             <div class="flex items-center gap-4 footer-links">
-                <button id="contacts-btn" class="text-xs underline hover:text-gray-600 transition-smooth" aria-label="Открыть контакты">КОНТАКТЫ</button>
-                <a href="offer.html" class="text-xs underline hover:text-gray-600 transition-smooth">ПУБЛИЧНАЯ ОФЕРТА</a>
-                <a href="policy.html" class="text-xs underline hover:text-gray-600 transition-smooth">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ</a>
+                <button id="contacts-btn" class="text-xs hover:text-gray-600 transition-smooth" aria-label="Открыть контакты">КОНТАКТЫ</button>
+                <a href="offer.html" class="text-xs hover:text-gray-600 transition-smooth">ПУБЛИЧНАЯ ОФЕРТА</a>
+                <a href="policy.html" class="text-xs hover:text-gray-600 transition-smooth">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ</a>
             </div>
         </div>
     </footer>
@@ -362,6 +443,7 @@
             const closeContacts = document.querySelector(".close-contacts");
 
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
             // Cookie Consent
             const cookieModal = document.getElementById("cookie-modal");
             const acceptCookiesBtn = document.getElementById("accept-cookies");
@@ -381,7 +463,6 @@
             acceptCookiesBtn.addEventListener("click", () => setCookieConsent("accepted"));
             declineCookiesBtn.addEventListener("click", () => setCookieConsent("declined"));
 
-            // Показать модал при загрузке, если нет согласия
             showCookieModal();
 
             // Динамическая высота main
@@ -402,7 +483,35 @@
             updateMainHeight();
             window.addEventListener("resize", updateMainHeight);
 
+            // Обновление полоски под кнопкой корзины
+            function updateCartUnderline() {
+                const icon = cartBtn.querySelector("i");
+                const text = cartBtn.querySelector("span");
+                const count = cartCount;
+
+                const btnRect = cartBtn.getBoundingClientRect();
+                const iconRect = icon.getBoundingClientRect();
+                const textRect = text.getBoundingClientRect();
+                const countRect = count.getBoundingClientRect();
+
+                const offset = iconRect.left - btnRect.left; // Смещение от левого края кнопки до иконки
+                let width;
+
+                if (count.classList.contains("hidden")) {
+                    // Если корзина пуста, полоска до конца текста "КОРЗИНА"
+                    width = textRect.right - iconRect.left;
+                } else {
+                    // Если есть товары, полоска до конца цифры
+                    width = countRect.right - iconRect.left;
+                }
+
+                cartBtn.style.setProperty('--underline-offset', `${offset}px`);
+                cartBtn.style.setProperty('--underline-width', `${width}px`);
+            }
+
             updateCartCount();
+            updateCartUnderline();
+            window.addEventListener("resize", updateCartUnderline);
 
             // Открытие/закрытие модальных окон
             function openModal(modal, overlay = null) {
@@ -563,6 +672,7 @@
                 } else {
                     cartCount.classList.add("hidden");
                 }
+                updateCartUnderline(); // Обновляем полоску при изменении количества
             }
 
             // Закрытие модальных окон по клавише Escape
@@ -572,41 +682,131 @@
                     closeModal(contactsModal);
                 }
             });
+
+            // Проверка статуса платежа после возвращения с оплаты
+            function checkPaymentStatus() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const paymentId = urlParams.get('payment_id');
+                
+                if (!paymentId) return;
+
+                fetch(`/check-payment-status.php?payment_id=${paymentId}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network error');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status === 'succeeded') {
+                            document.getElementById('order-number').textContent = paymentId;
+                            document.getElementById('success-popup').classList.remove('hidden');
+                            
+                            // Очищаем корзину
+                            cart = [];
+                            localStorage.removeItem('cart');
+                            updateCartCount();
+                            updateCart(); // Обновляем отображение корзины
+                            
+                            // Если корзина открыта - закрываем ее
+                            if (!cartModal.classList.contains('hidden')) {
+                                cartModal.classList.add('closing');
+                                cartModal.classList.remove('open');
+                                setTimeout(() => {
+                                    cartModal.classList.add('hidden');
+                                    cartOverlay.classList.add('hidden');
+                                    cartModal.classList.remove('closing');
+                                    document.body.classList.remove('modal-open');
+                                }, 300);
+                            }
+                        } else {
+                            document.getElementById('error-popup').classList.remove('hidden');
+                        }
+                        // Очищаем URL от параметров
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('error-popup').classList.remove('hidden');
+                    });
+            }
+
+            // Закрытие попапов
+            document.getElementById('close-success-popup').addEventListener('click', () => {
+                document.getElementById('success-popup').classList.add('hidden');
+            });
+
+            document.getElementById('close-error-popup').addEventListener('click', () => {
+                document.getElementById('error-popup').classList.add('hidden');
+            });
+
+            checkPaymentStatus();
+
+            // Обработка переключения изображений по зонам
+            document.querySelectorAll('.product-card').forEach(card => {
+                const mainImage = card.querySelector('.main-image');
+                const imageContainer = card.querySelector('.image-container');
+                const images = JSON.parse(imageContainer.getAttribute('data-images'));
+
+                imageContainer.addEventListener('mousemove', (e) => {
+                    const rect = imageContainer.getBoundingClientRect();
+                    const x = e.clientX - rect.left; // Позиция курсора относительно контейнера
+                    const width = rect.width;
+                    const zoneWidth = width / images.length; // Разделяем ширину на зоны
+                    const zoneIndex = Math.min(Math.floor(x / zoneWidth), images.length - 1); // Определяем индекс зоны
+                    mainImage.src = images[zoneIndex]; // Меняем изображение
+                });
+
+                imageContainer.addEventListener('mouseleave', () => {
+                    mainImage.src = images[0]; // Возвращаем первое изображение
+                });
+            });
+        });
+
+        const copyEmailBtn = document.querySelector(".copy-email");
+        copyEmailBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText("shynemoscow@inbox.ru")
+                .then(() => {
+                    copyEmailBtn.innerHTML = '<i class="fas fa-check text-lg"></i>';
+                    setTimeout(() => {
+                        copyEmailBtn.innerHTML = '<i class="fas fa-copy text-lg"></i>';
+                    }, 1000);
+                })
+                .catch(err => console.error("Ошибка копирования:", err));
         });
     </script>
+    
     <!-- Error popup -->
-    <div id="error-popup" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="relative w-full max-w-md bg-white p-8 rounded-lg text-center">
-            <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div id="error-popup" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-white p-8 rounded-lg text-center popup-container">
+            <div class="w-16 h-16 bg-[#3d0a05]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-[#3d0a05]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </div>
-            <h3 class="text-2xl font-bold mb-4">ОШИБКА ПЛАТЕЖА</h3>
-            <p class="mb-6">Платеж не был завершен. Пожалуйста, попробуйте снова.</p>
-            <button id="close-error-popup" class="inline-flex items-center bg-black text-white px-6 py-3 rounded-lg font-bold hover:opacity-90 transition md:text-base text-sm">
+            <h3 class="text-xl font-bold mb-4">ОШИБКА ПЛАТЕЖА</h3>
+            <p class="mb-6 text-gray-600 text-sm">Платеж не был завершен. Пожалуйста, попробуйте снова.</p>
+            <button id="close-error-popup" class="inline-flex items-center bg-[#3d0a05] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#2c0703] transition-smooth text-sm">
                 <i class="fas fa-times mr-2"></i> ЗАКРЫТЬ
             </button>
         </div>
     </div>
 
     <!-- Success popup -->
-    <div id="success-popup" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="relative w-full max-w-md bg-white p-8 rounded-lg text-center">
-            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div id="success-popup" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-white p-8 rounded-lg text-center popup-container">
+            <div class="w-16 h-16 bg-[#3d0a05]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-[#3d0a05]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
             </div>
-            <h3 class="text-2xl font-bold mb-4">ОПЛАТА УСПЕШНА!</h3>
-            <p class="mb-6">Ваш заказ №<span id="order-number">123456</span> успешно оплачен.</p>
-            <p class="text-sm text-gray-600 mb-8">Подробности заказа были отправлены на ваш email.</p>
-            <button id="close-success-popup" class="inline-flex items-center bg-black text-white px-6 py-3 rounded-lg font-bold hover:opacity-90 transition md:text-base text-sm">
+            <h3 class="text-xl font-bold mb-4">ОПЛАТА УСПЕШНА!</h3>
+            <p class="mb-4 text-gray-600 text-sm">Ваш заказ №<span id="order-number">123456</span> успешно оплачен.</p>
+            <p class="text-xs text-gray-500 mb-6">Подробности заказа были отправлены на ваш email.</p>
+            <button id="close-success-popup" class="inline-flex items-center bg-[#3d0a05] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#2c0703] transition-smooth text-sm">
                 <i class="fas fa-check mr-2"></i> ПОНЯТНО
             </button>
         </div>
     </div>
-    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9335be27bf05bfe0',t:'MTc0NTE2MzY1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'934c397fe9dfb077',t:'MTc0NTM5OTM5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
     <!-- Cookie Consent Modal -->
     <div id="cookie-modal" class="cookie-modal hidden" role="dialog" aria-label="Согласие на использование cookies">
         <div class="text-center">
